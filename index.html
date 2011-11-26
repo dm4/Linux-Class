@@ -23,6 +23,9 @@
 <link rel="stylesheet" id="style-theme-link" href="deck.js/themes/style/neon.css">
 <link rel="stylesheet" id="transition-theme-link" href="deck.js/themes/transition/horizontal-slide.css">
 <script src="deck.js/modernizr.custom.js"></script>
+<style>
+    .note { display: none; }
+</style>
 </head>
 <body class="deck-container">
 <div class="slide" id="index">
@@ -42,6 +45,20 @@
 <ul>
 <li><a href="https://github.com/dm4/Linux-Class/zipball/master">連結</a></li>
 </ul></li>
+</ul>
+</div><div class="slide" id="schedule">
+<h2>課程規劃</h2>
+<ul>
+<li><a href="pdf/1119.pdf">1119</a> Linux 安裝與使用者管理</li>
+<li><a href="1120/index.html">1120</a> Shell 操作與套件管理</li>
+<li><a href="1126/index.html">1126</a> 檔案系統、Regular Expression、Vim 基礎操作</li>
+<li>1127 網路設定與 NFS</li>
+<li>1203 系統記錄與排程管理</li>
+<li>1204 網頁伺服器 Apache 架設與使用</li>
+<li>1210 Shell Script</li>
+<li>1211 檔案伺服器 FTP、Samba</li>
+<li>1217 防火牆建置 iptable</li>
+<li>1218 系統安全與網路安全</li>
 </ul>
 </div>
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
@@ -63,6 +80,26 @@
 
 <script src="deck.js/jquery.js"></script>
 <script>window.jQuery || document.write('<script src="deck.js/jquery-1.6.1.min.js">\x3C/script>')</script>
+<script>
+$(document).bind('deck.change', function(event, from, to) {
+    slide = $.deck('getSlide', to);
+    note = $(slide).find('.note').html();
+    if (typeof noteWindow != 'undefined') {
+        noteWindow.document.body.innerHTML = "";
+    }
+    if (note) {
+        if (typeof noteWindow == 'undefined') {
+            noteWindow = window.open('', 'note');
+            noteWindow.blur();
+            window.focus();
+        }
+        noteWindow.document.write("<h1>備忘：</h1>");
+        noteWindow.document.write("<h3>");
+        noteWindow.document.write(note);
+        noteWindow.document.write("</h3>");
+    }
+});
+</script>
 
 <!-- Deck Core and extensions -->
 <script src="deck.js/core/deck.core.js"></script>
