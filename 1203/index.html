@@ -203,8 +203,14 @@ $ at -d 1
 <li><h3>建立使用者cron</h3>
 <ul>
 <li><code>每分鐘</code> 執行一次date寫入家目錄下的testcron</li>
-<li>隔幾分鐘後檢查，是否成功</li>
 </ul></li>
+</ul>
+<div></div>
+<pre><code>date &gt;&gt; /home/user/testcron
+</code></pre>
+<div></div>
+<ul>
+<li>隔幾分鐘後檢查，是否成功</li>
 </ul>
 </div><div class="slide" id="periodic_process11">
 <h2>anacron - anacrontab</h2>
@@ -329,7 +335,7 @@ anacron -u cron.daily
 </code></pre>
 <div></div>
 <pre><code>$ ls /etc/rsyslog.d/
-$ cat /etc/rsyslog.d/50-default-conf
+$ cat /etc/rsyslog.d/50-default.conf
 </code></pre>
 </div><div class="slide" id="rsyslogd-2">
 <h2>rsyslogd - config format</h2>
@@ -367,7 +373,7 @@ emerg 或 panic ： 阿！系統已經進入混亂的階段！真的是完蛋了
 </code></pre>
 </div><div class="slide" id="rsyslogd-3">
 <h2>rsyslogd - practice</h2>
-<pre><code># vim /etc/rsyslog.d/50-default-conf
+<pre><code># vim /etc/rsyslog.d/50-default.conf
 *.info      /var/log/test.log
 </code></pre>
 <div></div>
@@ -405,6 +411,16 @@ $ cat /etc/logrotate.d/rsyslog
 <li><h3>root/adm - rw</h3></li>
 <li><h3>others - r or x</h3></li>
 </ul>
+</div><div class="slide" id="practice1">
+<h2>practice nfs + cron</h2>
+<pre><code>showmount
+mkdir
+mount 
+crontab
+</code></pre>
+<div></div>    
+<pre><code>date "+%Y%m%d %H:%M"
+</code></pre>
 </div><div class="slide" id="HW1-1">
 <h2>HW1, part1</h2>
 <ul>
@@ -437,6 +453,7 @@ aa,kiki,
 <ul>
 <li>/tmp/home.20111203.tar.bz2</li>
 </ul></li>
+<li><h3>一天備份一次</h3></li>
 <li><h3>作業繳交：crontab所設定的指令</h3></li>
 </ul>
 </div><div class="slide" id="end">
