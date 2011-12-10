@@ -1,0 +1,436 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Linux 作業系統班</title>
+<meta name="description" content="A jQuery library for modern HTML presentations">
+<meta name="author" content="Caleb Troughton">
+<meta name="viewport" content="width=1024, user-scalable=no">
+<!-- Core and extension CSS files -->
+<link rel="stylesheet" href="../deck.js/core/deck.core.css">
+<link rel="stylesheet" href="../deck.js/extensions/goto/deck.goto.css">
+<link rel="stylesheet" href="../deck.js/extensions/menu/deck.menu.css">
+<link rel="stylesheet" href="../deck.js/extensions/navigation/deck.navigation.css">
+<link rel="stylesheet" href="../deck.js/extensions/status/deck.status.css">
+<link rel="stylesheet" href="../deck.js/extensions/hash/deck.hash.css">
+<!-- Theme CSS files (menu swaps these out) -->
+<!-- <link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/web-2.0.css"> -->
+<!--<link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/swiss.css"> -->
+<link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/neon.css">
+<link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/horizontal-slide.css">
+<script src="../deck.js/modernizr.custom.js"></script>
+<style>
+    .note { display: none; }
+</style>
+</head>
+<body class="deck-container">
+<div class="slide" id="1126">
+<h1>Linux 作業系統班</h1>
+</div><div class="slide" id="index">
+<h1>網頁伺服器 Apache</h1>
+</div><div class="slide" id="outline">
+<h2>Outline</h2>
+<ul>
+<li><h3>Apache 簡介</h3></li>
+<li><h3>Apache 安裝與設定</h3></li>
+<li><h3>.htaccess 設定</h3></li>
+<li><h3>URL Rewrite 設定</h3></li>
+<li><h3>使用者目錄設定</h3></li>
+<li><h3>Virtual Host 設定</h3></li>
+</ul>
+</div><div class="slide" id="outline">
+<h2>網頁伺服器 Apache</h2>
+<ul>
+<li><a href="http://www.apache.org">http://www.apache.org</a></li>
+<li><h3>LAMP</h3>
+<ul>
+<li>Linux</li>
+<li>Apache</li>
+<li>MySQL</li>
+<li>PHP</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="dir">
+<h2>Apache 目錄結構</h2>
+<ul>
+<li><code>/usr/sbin/</code>
+<ul>
+<li>可執行檔</li>
+</ul></li>
+<li><code>/etc/apache2/</code>
+<ul>
+<li>設定檔</li>
+</ul></li>
+<li><code>/var/www/</code>
+<ul>
+<li>預設的網頁目錄</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="dir-2">
+<h2>Apache 目錄結構</h2>
+<ul>
+<li><code>/usr/lib/apache2/modules/</code>
+<ul>
+<li>模組檔案</li>
+</ul></li>
+<li><code>/var/log/apache2/</code>
+<ul>
+<li>記錄檔</li>
+</ul></li>
+<li><code>/etc/init.d/apache2/</code>
+<ul>
+<li>服務啟動檔案</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="install">
+<h2>Apache 安裝與設定</h2>
+<ul>
+<li><h3>安裝</h3>
+<pre><code>$ sudo aptitude install apache2
+</code></pre></li>
+<li><h3>測試</h3>
+<ul>
+<li>打開瀏覽器，連至 <a href="http://localhost/">http://localhost/</a></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="practice-1">
+<h2>練習</h2>
+<ul>
+<li><h3>修改首頁</h3></li>
+<li><h3>建立網頁</h3>
+<ul>
+<li><a href="http://localhost/test/hello.html">http://localhost/test/hello.html</a></li>
+</ul></li>
+<li><h3>測試權限</h3>
+<ul>
+<li>把 <code>hello.html</code> 權限改成 700、744、755 查看不同權限的狀況</li>
+<li>把資料夾 <code>test</code> 權限改成 711、744、755 查看不同權限的狀況</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="config-1">
+<h2>Apache 設定檔</h2>
+<ul>
+<li><code>/etc/apache2/envvars</code>
+<ul>
+<li>Apache環境變數</li>
+</ul></li>
+<li><code>/etc/apache2/httpd.conf</code>
+<ul>
+<li>網頁伺服器的變數設定:逾時值、最大 連線數等...</li>
+</ul></li>
+<li><code>/etc/apache2/ports.conf</code>
+<ul>
+<li>Apache監聽的IP位址與通訊埠(port)</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="config-2">
+<h2>Apache 設定檔</h2>
+<ul>
+<li><code>/etc/apache2/sites-available</code>
+<ul>
+<li>虛擬主機設定</li>
+</ul></li>
+<li><code>/etc/apache2/sites-enabled</code>
+<ul>
+<li>已啟用的虛擬主機的設定</li>
+</ul></li>
+<li><code>/etc/apache2/conf.d</code>
+<ul>
+<li>使用者自訂的的設定檔</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="config-3">
+<h2>Apache 設定檔</h2>
+<ul>
+<li><code>/etc/apache2/mods-available</code>
+<ul>
+<li>可用的模組(module)</li>
+</ul></li>
+<li><code>/etc/apache2/mods-enabled</code>
+<ul>
+<li>已啟用的模組</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="change-dir">
+<h2>改變預設目錄</h2>
+<ul>
+<li><p><code>/var/www</code> 預設的網頁目錄</p>
+<ul>
+<li><p>修改 <code>/etc/apache2/sites-enabled/000-default</code></p>
+<pre><code>DocumentRoot /var/www/
+</code></pre>
+<p>改成</p>
+<pre><code>DocumentRoot /home/user/www/
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="change-dir-2">
+<h2>改變預設目錄</h2>
+<ul>
+<li><p>重新啟動 Apache</p>
+<pre><code>$ sudo service apache2 restart
+</code></pre></li>
+</ul>
+</div><div class="slide" id="setting">
+<h2>Apache 設定</h2>
+<ul>
+<li><code>Options</code>
+<ul>
+<li><code>All</code> 允許所有選項,這是預設指令</li>
+<li><code>None</code> 關閉所有選項</li>
+<li><code>Indexes</code> 允許顯示目錄</li>
+<li><code>FollowSymLinks</code> 允許使用 symbolic link</li>
+<li><code>ExecCGI</code> 允許使用 CGI 程式</li>
+</ul></li>
+<li><code>&lt;Directory&gt;...&lt;/Directory&gt;</code>
+<ul>
+<li>設定 Apache 伺服器對於目錄的存取規則</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="setting-2">
+<h2>Apache 設定</h2>
+<ul>
+<li><h3>瀏覽權限設定</h3>
+<pre><code>Order allow,deny
+Allow from all
+Deny  from 140.112.0.0/16
+</code></pre></li>
+<li><p><code>Order</code> 檢查順序</p></li>
+</ul>
+</div><div class="slide" id="setting-3">
+<h2>Apache 設定</h2>
+<ul>
+<li><code>AllowOverride</code>
+<ul>
+<li><code>All</code> 允許 <code>.htaccess</code> </li>
+<li><code>None</code> 不允許 <code>.htaccess</code> </li>
+</ul></li>
+<li><code>ErrorLog</code>
+<ul>
+<li>錯誤訊息存放位置</li>
+</ul></li>
+<li><code>ErrorDocument</code>
+<ul>
+<li>錯誤訊息</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="practice-2">
+<h2>練習</h2>
+<ul>
+<li><h3>Error Log</h3>
+<ul>
+<li>連至一個不存在的網頁，如：<a href="http://localhost/abc">http://localhost/abc</a></li>
+<li>查看 <code>/var/log/apache2/error.log</code> 的變化</li>
+</ul></li>
+<li><h3>更改 Error Message</h3>
+<ul>
+<li><p>在 <code>/etc/apache2/httpd.conf</code> 加入</p>
+<pre><code>ErrorDocument 404 "Hello"
+</code></pre></li>
+<li><p>重啟 Apache ，再連至一個不存在的網頁測試錯誤訊息</p></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="htaccess-1">
+<h2><code>.htaccess</code> 設定</h2>
+<ul>
+<li><code>AllowOverride All</code></li>
+<li>放在想要設定的目錄下</li>
+<li>優點：方便設定</li>
+<li>缺點：不易管理</li>
+</ul>
+</div><div class="slide" id="practice-3">
+<h2>練習</h2>
+<ul>
+<li><p>修改 <code>/etc/apache2/sites-enabled/000-default</code></p>
+<pre><code>AllowOverride All
+</code></pre></li>
+<li><p>新增目錄 <code>test</code> ，並查看 <code>http://localhost/test</code> 的結果</p></li>
+<li><p>在 <code>test</code> 目錄下新增檔案 <code>.htaccess</code></p>
+<pre><code>Options -Indexes
+</code></pre></li>
+</ul>
+</div><div class="slide" id="htaccess-2">
+<h2><code>.htaccess</code> 設定</h2>
+<ul>
+<li><h3>帳號控管</h3>
+<ul>
+<li>讓只有特定的人才能看到</li>
+<li><p>執行 <code>$ htpasswd -c .htpasswd 使用者名稱</code></p></li>
+<li><p>在 <code>.htaccess</code> 中加入</p>
+<pre><code>AuthType      Basic
+AuthName      "登入前的提示訊息"
+AuthUserFile  .htpasswd檔的路徑
+Require       valid-user
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="rewrite-1">
+<h2>URL Rewrite 設定</h2>
+<ul>
+<li><p>把 URL 重新導向</p></li>
+<li><p>可利用 Regular Expression 做條件判斷</p></li>
+<li><p>可用於改變網址樣式</p></li>
+<li><p><code>$ sudo a2enmod rewrite</code></p></li>
+</ul>
+</div><div class="slide" id="rewrite-2">
+<h2>URL Rewrite 設定</h2>
+<ul>
+<li><h3>用法</h3>
+<pre><code>RewriteEngine On
+RewriteRule   URL樣式  被導向的網址 [參數]
+</code></pre></li>
+<li><h3>參數</h3>
+<ul>
+<li><code>NC</code> 不分大小寫</li>
+<li><code>R</code> 代表 Reload</li>
+<li><code>L</code> 代表最後一個 RewriteRule</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="rewrite-3">
+<h2>URL Rewrite 設定</h2>
+<ul>
+<li><h3>範例</h3>
+<ul>
+<li><p>修改 <code>/etc/apache2/sites-enabled/000-default</code></p>
+<pre><code>RewriteEngine On
+RewriteRule   ^/hello$  /hello.html  [R,L]
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="practice-4">
+<h2>練習</h2>
+<ul>
+<li><p>上一頁的設定，如果參數改成 <code>[L]</code> 結果會是如何？</p></li>
+<li><p>如何利用 Rewrite 來隱藏網址裡的 <code>.html</code> 副檔名？</p></li>
+</ul>
+</div><div class="slide" id="user-dir-1">
+<h2>使用者目錄設定</h2>
+<ul>
+<li><p>有些網站常見的網址 <a href="http://網址/~使用者名稱/">http://網址/~使用者名稱/</a></p></li>
+<li><p>讓每個使用者擁有自己的網頁目錄</p></li>
+<li><p>利用 UserDir 模組</p></li>
+</ul>
+</div><div class="slide" id="user-dir-2">
+<h2>使用者目錄設定</h2>
+<ul>
+<li><h3>啟用模組</h3>
+<pre><code>sudo a2enmod userdir
+</code></pre></li>
+<li><h3>設定</h3>
+<ul>
+<li><p>修改 <code>/etc/apache2/httpd.conf</code></p>
+<pre><code>UserDir public_html
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="user-dir-3">
+<h2>使用者目錄設定</h2>
+<ul>
+<li><p>在使用者家目錄新增 <code>public_html</code> 目錄</p></li>
+<li><p>測試 <a href="http://localhost/~使用者名稱">http://localhost/~使用者名稱</a></p></li>
+</ul>
+</div><div class="slide" id="user-dir-4">
+<h2>使用者目錄設定</h2>
+<ul>
+<li><h3>設定</h3>
+<ul>
+<li><p>不讓特定帳號使用</p>
+<pre><code>UserDir enabled
+UserDir disabled root guest
+</code></pre></li>
+<li><p>只讓特定帳號使用</p>
+<pre><code>UserDir disabled
+UserDir enabled user
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="vhost-1">
+<h2>Virtual Host 設定</h2>
+<ul>
+<li><p>可以讓同一台機器，對不同的網域做不同的反應</p></li>
+<li><p>讓 <a href="http://ubuntu.dm4.tw">http://ubuntu.dm4.tw</a> 和 <a href="http://game.dm4.tw">http://game.dm4.tw</a> 連到同一台機器，但是顯示不同的網頁</p></li>
+</ul>
+</div><div class="slide" id="vhost-2">
+<h2>Virtual Host 設定</h2>
+<ul>
+<li><h3>設定</h3>
+<ul>
+<li>修改 <code>/etc/apache2/sites-enabled/000-default</code></li>
+<li><p>新增 VirtualHost 設定</p>
+<pre><code>&lt;VirtualHost *:80&gt;                                                                                                                                                                                                                            
+    ServerName xxx.xxx.xxx
+    ...
+&lt;/VirtualHost&gt;
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="game">
+<h2>Little Game</h2>
+<ul>
+<li><p>小明第一次學架網站，他用了 Apache Server 及 php 寫了一個登入系統， <br />
+但是卻不小心沒把網站設定好， <br />
+導致使用者帳號/密碼外洩，登入機制形同虛設。 <br />
+請問使用者的帳號/密碼是多少呢？ <br />
+小明是哪裡沒有設定好呢？</p>
+<ul>
+<li>hint: <code>Options Indexes</code></li>
+</ul></li>
+<li><p>小明的網站 <a href="http://game.dm4.tw">http://game.dm4.tw</a></p></li>
+</ul>
+</div><div class="slide" id="end">
+<h1>End</h1>
+</div>
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+<p class="deck-status">
+    台大資訊系統訓練班 Linux 作業系統班&nbsp;&nbsp;&nbsp;&nbsp;
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="../deck.js/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="../deck.js/jquery-1.6.1.min.js">\x3C/script>')</script>
+<script>
+$(document).bind('deck.change', function(event, from, to) {
+    slide = $.deck('getSlide', to);
+    note = $(slide).find('.note').html();
+    if (typeof noteWindow != 'undefined') {
+        noteWindow.document.body.innerHTML = "";
+    }
+    if (note) {
+        if (typeof noteWindow == 'undefined') {
+            noteWindow = window.open('', 'note');
+            noteWindow.blur();
+            window.focus();
+        }
+        noteWindow.document.write("<h1>備忘：</h1>");
+        noteWindow.document.write("<h3>");
+        noteWindow.document.write(note);
+        noteWindow.document.write("</h3>");
+    }
+});
+</script>
+
+<!-- Deck Core and extensions -->
+<script src="../deck.js/core/deck.core.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
+<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/hash/deck.hash.js"></script>
+<script> $(function() {$.deck('.slide');}); </script>
+</body>
+</html>

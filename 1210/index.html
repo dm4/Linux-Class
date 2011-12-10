@@ -1,0 +1,530 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Linux 作業系統班</title>
+<meta name="description" content="A jQuery library for modern HTML presentations">
+<meta name="author" content="Caleb Troughton">
+<meta name="viewport" content="width=1024, user-scalable=no">
+<!-- Core and extension CSS files -->
+<link rel="stylesheet" href="../deck.js/core/deck.core.css">
+<link rel="stylesheet" href="../deck.js/extensions/goto/deck.goto.css">
+<link rel="stylesheet" href="../deck.js/extensions/menu/deck.menu.css">
+<link rel="stylesheet" href="../deck.js/extensions/navigation/deck.navigation.css">
+<link rel="stylesheet" href="../deck.js/extensions/status/deck.status.css">
+<link rel="stylesheet" href="../deck.js/extensions/hash/deck.hash.css">
+<!-- Theme CSS files (menu swaps these out) -->
+<!-- <link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/web-2.0.css"> -->
+<!--<link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/swiss.css"> -->
+<link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/neon.css">
+<link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/horizontal-slide.css">
+<script src="../deck.js/modernizr.custom.js"></script>
+<style>
+    .note { display: none; }
+</style>
+</head>
+<body class="deck-container">
+<div class="slide" id="1210">
+<h1>Linux 作業系統班</h1>
+</div><div class="slide" id="hw1-1">
+<h2>Homework 1 解答</h2>
+<ul>
+<li><a href="hw1-1.txt">測試資料</a></li>
+<li>一個字元以上,包含前一個字串,一個字元以上</li>
+<li>輸出第三個字串的第一個字母</li>
+<li><p><code>hello</code> , wow<code>hello</code>world , <code>a</code>pple</p></li>
+<li><p>想法</p>
+<ul>
+<li>比對第一個部分 <code>.\{1,\}</code></li>
+<li>把第一個部份存起來 <code>\(.\{1,\}\)</code></li>
+<li>利用 <code>.*\1.*</code> 比對第二個部分</li>
+<li>取出第三部份的第一個字並存下來 <code>\(.\).*</code></li>
+</ul></li>
+<li><p><code>$ sed -n 's/^\(.\{1,\}\),.*\1.*,\(.\).*$/\2/p' hw.txt</code></p></li>
+</ul>
+</div><div class="slide" id="hw1-2">
+<h2>Homework 1 解答</h2>
+<ul>
+<li>備份家目錄</li>
+<li>備份檔案需用 <code>tar</code> 壓縮成 <code>bz</code> 檔案格式</li>
+<li>檔名為 <code>home.yyyymmdd.tar.bz2</code> 並存放於 <code>/tmp</code> 下</li>
+<li>想法
+<ul>
+<li><code>$ tar cjvf 檔名 /home/user</code></li>
+<li><code>$ date '+%Y%m%d'</code></li>
+<li>在 crontab 裡， <code>%</code> 需要跳脫</li>
+</ul></li>
+</ul>
+<div></div>
+<div>
+0 12 * * * tar cjvf /tmp/home.`date "+\%Y\%m\%d"`.tar.bz2 /home/user
+</div>
+</div><div class="slide" id="index">
+<h1>程式化腳本 Shell Script</h1>
+</div><div class="slide" id="outline">
+<h2>Outline</h2>
+<ul>
+<li><h3>Shell Script 簡介</h3></li>
+<li><h3>變數與字串</h3></li>
+<li><h3>執行 Shell Script</h3></li>
+<li><h3>特殊變數</h3></li>
+<li><h3>條件判斷與邏輯</h3></li>
+<li><h3>迴圈</h3></li>
+<li><h3>函式</h3></li>
+</ul>
+</div><div class="slide" id="intro">
+<h2>為什麼要用 Shell Script</h2>
+<ul>
+<li><h3>指令腳本</h3></li>
+<li><h3>自動化</h3></li>
+<li><h3>簡化指令</h3></li>
+</ul>
+</div><div class="slide" id="variable-1">
+<h2>變數</h2>
+<ul>
+<li><h3>設定變數</h3>
+<pre><code>$ test=1
+$ echo $test
+</code></pre></li>
+<li><p>注意 <code>=</code> 左右不要有空白</p></li>
+<li>如果要讓其他程式讀的到變數，要用 <code>export</code></li>
+</ul>
+</div><div class="slide" id="variable-2">
+<h2>變數</h2>
+<ul>
+<li><h3>設成一般變數</h3>
+<pre><code>$ test=1
+$ bash
+$ echo $test
+</code></pre></li>
+<li><h3>設成環境變數</h3>
+<pre><code>$ export test=1
+$ bash
+$ echo $test
+</code></pre></li>
+</ul>
+</div><div class="slide" id="string-1">
+<h2>字串</h2>
+<ul>
+<li><h3>字串的連接</h3>
+<pre><code>$ test=1"23"'45'
+$ echo $test
+</code></pre></li>
+</ul>
+</div><div class="slide" id="string-2">
+<h2>字串</h2>
+<ul>
+<li><h3>字串中的指令取代</h3>
+<pre><code>$ test=A`date +%Y`B
+$ echo $test
+</code></pre></li>
+<li><h3>另一種寫法</h3>
+<pre><code>$ test=A$(date +%Y)B
+$ echo $test
+</code></pre></li>
+</ul>
+</div><div class="slide" id="string-3">
+<h2>字串</h2>
+<ul>
+<li><h3>字串中的變數</h3>
+<pre><code>$ test=Hello
+$ test2=${test},World
+$ echo $test2
+</code></pre></li>
+</ul>
+</div><div class="slide" id="string-4">
+<h2>字串</h2>
+<ul>
+<li><h3>單引號</h3>
+<ul>
+<li>用引號取消特殊字元的功能 <code>; ( ) &lt; &gt; &amp; | ~ $</code></li>
+</ul></li>
+<li><h3>雙引號</h3>
+<ul>
+<li>會保留 <code>$ `</code></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="string-5">
+<h2>字串</h2>
+<ul>
+<li><h3>單引號</h3>
+<pre><code>$ test='`date +%Y`'
+$ echo $test
+</code></pre></li>
+<li><h3>雙引號</h3>
+<pre><code>$ test="`date +%Y`"
+$ echo $test
+</code></pre></li>
+</ul>
+</div><div class="slide" id="practice-1">
+<h2>練習</h2>
+<ul>
+<li><h3>下面的 Script 的結果是什麼？</h3>
+<pre><code>$ hello="echo 123"
+$ world=${hello}456
+$ result=`$world`
+</code></pre></li>
+<li><h3>為什麼？</h3></li>
+</ul>
+</div><div class="slide" id="math-1">
+<h2>數值運算</h2>
+<ul>
+<li><p><code>$((...))</code></p>
+<ul>
+<li><code>$((1+2*3))</code></li>
+<li>沒辦法算小數</li>
+</ul></li>
+<li><p><code>expr</code></p>
+<ul>
+<li><code>$ expr 1 + 2 \* 3</code></li>
+<li>沒辦法算小數</li>
+<li>要用空格隔開</li>
+<li>記得跳脫特殊字元</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="math-2">
+<h2>數值運算</h2>
+<ul>
+<li><code>bc</code>
+<ul>
+<li><code>$ echo "1 + 2 * 3" | bc -l</code></li>
+<li>可以算小數</li>
+<li>不能直接在參數裡給算式</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="how-1">
+<h2>執行 Shell Script</h2>
+<ul>
+<li><h3>執行</h3>
+<ul>
+<li><p>可以在第一行指定 Shell 直譯器</p>
+<pre><code>#!/bin/bash
+</code></pre></li>
+<li><p>或是在 console 中利用 Shell 直譯器執行</p>
+<pre><code>$ bash script.sh
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="how-2">
+<h2>編寫與執行 Shell Script</h2>
+<ul>
+<li><h3>檔案內容</h3>
+<pre><code>#!/bin/bash
+echo "Hello!"
+</code></pre></li>
+<li><h3>變更權限</h3>
+<pre><code>$ chmod +x hello.sh
+</code></pre></li>
+<li><h3>執行</h3>
+<pre><code>$ ./hello.sh
+</code></pre></li>
+</ul>
+</div><div class="slide" id="how-3">
+<h2>編寫與執行 Shell Script</h2>
+<ul>
+<li><h3>檔案內容</h3>
+<pre><code>echo "Hello!"
+</code></pre></li>
+<li><h3>不用變更權限！</h3></li>
+<li><h3>執行</h3>
+<pre><code>$ bash hello.sh
+</code></pre></li>
+</ul>
+</div><div class="slide" id="practice-2">
+<h2>練習</h2>
+<ul>
+<li><h3>練習寫一個 Shell Script</h3>
+<ul>
+<li><p>印出 <code>目前時間:... 目前路徑:...</code></p>
+<pre><code>目前時間: 2011年12月 9日 周五 23時44分29秒 CST 目前路徑: /Users/dm4
+</code></pre></li>
+</ul></li>
+<li><h3>用兩種方式執行 Shell Script</h3></li>
+</ul>
+</div><div class="slide" id="variable-1">
+<h2>特殊變數</h2>
+<ul>
+<li><p><code>$0</code>, <code>$1</code>, <code>$2</code>, ...</p>
+<pre><code>$ ./hello.sh Hello World "Test Test"
+      $0       $1   $2       $3
+</code></pre></li>
+<li><p><code>$@</code>, <code>$*</code></p>
+<ul>
+<li>為 <code>$1 $2 ...</code></li>
+</ul></li>
+<li><p><code>$?</code></p>
+<ul>
+<li>前一個指令的回傳值
+<ul>
+<li><code>0</code> 為成功</li>
+</ul></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="variable-2">
+<h2>特殊變數</h2>
+<ul>
+<li><p>修改 <code>hello.sh</code></p>
+<pre><code>#!/bin/bash
+echo '$1 '$1
+echo '$2 '$2
+echo '$3 '$3
+</code></pre></li>
+<li><p>執行</p>
+<pre><code>$ ./hello.sh Hello World "Test Test"
+</code></pre></li>
+</ul>
+</div><div class="slide" id="input">
+<h2>輸入</h2>
+<ul>
+<li><h3><code>read</code></h3>
+<ul>
+<li><p>從 console 讀取輸入並存入變數</p>
+<pre><code>$ read a
+$ echo $a
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="practice-3">
+<h2>練習</h2>
+<ul>
+<li><h3>提示使用者輸入一個檔名，並幫使用者在家目錄下生出相對應的檔案</h3></li>
+</ul>
+</div><div class="slide" id="logic-1">
+<h2>條件判斷</h2>
+<ul>
+<li>利用 <code>test ...</code></li>
+<li>利用 <code>[ ... ]</code></li>
+</ul>
+</div><div class="slide" id="logic-2">
+<h2>條件判斷</h2>
+<ul>
+<li><code>-f file</code>  file 存在，並且為一檔案。</li>
+<li><code>-d file</code>  file 存在，並且為一目錄。</li>
+<li><code>-r file</code>  執行此 script 者對 file 具有讀取權限。</li>
+<li><code>-w file</code>  執行此 script 者對 file 具有寫入權限。</li>
+<li><code>-x file</code>  執行此 script 者對 file 具有執行權限。</li>
+<li><code>-e file</code>  file 存在於系統上。</li>
+<li><code>-s file</code>  file 存在，並且檔案大小不為 0。</li>
+<li><code>-u file</code>  file 具有 SUID 的屬性。</li>
+<li><code>-g file</code>  file 具有 SGID 的屬性。</li>
+<li><code>-k file</code>  file 具有 Sticky bit 的屬性。</li>
+<li><code>file1 -nt file2</code>  file1 較 file2 為新 ( 根據修改時間作比較 )。</li>
+<li><code>file1 -ot file2</code>  file1 較 file2 為舊 ( 根據修改時間作比較 )。</li>
+</ul>
+</div><div class="slide" id="logic-3">
+<h2>條件判斷</h2>
+<ul>
+<li><code>n1 -eq n2</code>  n1 等於 n2。-eq : equal。</li>
+<li><code>n1 -ne n2</code>  n1 不等於 n2。-ne : not equal。</li>
+<li><code>n1 -gt n2</code>  n1 大於 n2。-gt : greater than。</li>
+<li><code>n1 -ge n2</code>  n1 大於等於 n2。-ge : greater than or equal。</li>
+<li><code>n1 -lt n2</code>  n1 小於 n2。-lt : less than。</li>
+<li><code>n1 -le n2</code>  n1 小於等於 n2。-le : less than or equal。</li>
+</ul>
+</div><div class="slide" id="logic-4">
+<h2>條件判斷</h2>
+<ul>
+<li><code>str1 = str2</code>     str1 等於 str2。</li>
+<li><code>str1 != str2</code>    str1 不等於 str2。</li>
+<li><code>str1 &gt; str2</code>     str1 大於 str2。</li>
+<li><code>str1 &lt; str2</code>     str1 小於 str2。</li>
+<li><code>-z str</code>          str 為空字串。</li>
+<li><code>-n str</code>          str 為非空字串。</li>
+</ul>
+</div><div class="slide" id="logic-6">
+<h2>條件判斷</h2>
+<ul>
+<li><h3><code>&amp;&amp;</code> (and)</h3>
+<ul>
+<li>前一個指令成功，才執行下一個指令</li>
+<li><p>如果變數 a 等於 12 就印出 Yes</p>
+<pre><code>$ test "$a" -eq '12' &amp;&amp; echo Yes
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="logic-7">
+<h2>條件判斷</h2>
+<ul>
+<li><h3><code>||</code> (or)</h3>
+<ul>
+<li>前一個指令失敗，才執行下一個指令</li>
+<li><p>如果變數 a 不等於 12 就印出 No</p>
+<pre><code>$ [ "$a" -eq '12' ] || echo No
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="logic-8">
+<h2>條件判斷</h2>
+<ul>
+<li><h3>使用 <code>[ ... ]</code></h3>
+<ul>
+<li><p>每個部份需用空白隔開，不能連在一起</p>
+<pre><code># 底線的地方要注意，必須有空白
+[_-f_'/tmp/testfile'_]
+</code></pre></li>
+<li><p>使用變數時，用 <code>"</code> 包起來</p></li>
+<li><p>使用常數時，如字串、數字，用 <code>'</code> 包起來</p>
+<pre><code>[ "$a" -gt '12' ]
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="logic-9">
+<h2>條件判斷</h2>
+<ul>
+<li><h3><code>if</code> / <code>then</code> / <code>else</code></h3>
+<pre><code>if [ 條件 ]; then
+    指令
+elif [ 條件 ]; then
+    指令
+else
+    指令
+fi
+</code></pre></li>
+</ul>
+</div><div class="slide" id="practice-4">
+<h2>練習</h2>
+<ul>
+<li><h3>執行程式後，依使用者輸入來決定要產生或移除 <code>~/testfile</code></h3></li>
+</ul>
+</div><div class="slide" id="loop-1">
+<h2>迴圈</h2>
+<ul>
+<li><h3><code>for</code></h3>
+<pre><code>name="guava grape apple banana"
+for fruit in $name
+do
+    echo $fruit
+done
+</code></pre></li>
+</ul>
+</div><div class="slide" id="loop-2">
+<h2>迴圈</h2>
+<ul>
+<li><h3><code>for</code></h3>
+<pre><code>for (( n=1; n&lt;=20; n=n+1 ))
+do
+    echo $n
+done
+</code></pre></li>
+</ul>
+</div><div class="slide" id="loop-3">
+<h2>迴圈</h2>
+<ul>
+<li><h3><code>while</code></h3>
+<pre><code>i=1
+while [ "$i" -le '20' ]
+do
+    echo $i
+    i=$(($i+1))
+done
+</code></pre></li>
+</ul>
+</div><div class="slide" id="practice-5">
+<h2>練習</h2>
+<ul>
+<li><h3>使用者輸入一個目錄，把目錄下的檔案重新命名</h3></li>
+<li>目錄不存在就不執行接下來的 script
+<ul>
+<li><code>exit</code> 結束 script 的執行</li>
+</ul></li>
+<li>詢問使用者檔案的新名字</li>
+</ul>
+</div><div class="slide" id="function-1">
+<h2>函式</h2>
+<ul>
+<li><p>函式可以用來改進 script 的結構</p>
+<pre><code>函式名稱() {
+    內容
+}
+</code></pre></li>
+</ul>
+</div><div class="slide" id="function-2">
+<h2>函式</h2>
+<ul>
+<li>和 script 一樣，也有 <code>$1</code>, <code>$2</code>, ...</li>
+<li><p>沒有 <code>$0</code></p>
+<pre><code>hello() {
+    echo "Hello! $1"
+}
+</code></pre></li>
+</ul>
+</div><div class="slide" id="game">
+<h2>Little Game</h2>
+<ul>
+<li><p>小明把上星期的網站修好了，現在沒辦法利用 Indexes 來看到登入密碼，
+於是小明開心的把網站加上了新的功能，現在小明的網站可以輸入月份，
+來查詢當月的月曆，過了不久小明發現自己的登入帳號/密碼又外洩了，
+請問這次小明是哪裡沒做好呢？</p></li>
+<li><p>小明的網站 <a href="http://game.dm4.tw">http://game.dm4.tw</a></p></li>
+</ul>
+</div><div class="slide" id="hw2">
+<h2>Homework 2</h2>
+<ul>
+<li>使用者輸入一個目錄，把目錄下 <code>所有</code> 的 <code>.txt</code> 檔做特定處理
+<ul>
+<li><code>所有</code> 代表子目錄下的 <code>.txt</code> 也要考慮到</li>
+</ul></li>
+<li>目錄不存在就不執行接下來的 script</li>
+<li>對於每個 <code>.txt</code> 檔，在檔案第一行加入 <code>#--Homework2--#</code> ，並命名成 <code>.log</code></li>
+<li>不要修改到原本的 <code>.txt</code></li>
+<li><p>執行方法</p>
+<pre><code>$ ./hw2.sh testdir
+</code></pre></li>
+</ul>
+</div><div class="slide" id="end">
+<h1>End</h1>
+</div>
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+<p class="deck-status">
+    台大資訊系統訓練班 Linux 作業系統班&nbsp;&nbsp;&nbsp;&nbsp;
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="../deck.js/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="../deck.js/jquery-1.6.1.min.js">\x3C/script>')</script>
+<script>
+$(document).bind('deck.change', function(event, from, to) {
+    slide = $.deck('getSlide', to);
+    note = $(slide).find('.note').html();
+    if (typeof noteWindow != 'undefined') {
+        noteWindow.document.body.innerHTML = "";
+    }
+    if (note) {
+        if (typeof noteWindow == 'undefined') {
+            noteWindow = window.open('', 'note');
+            noteWindow.blur();
+            window.focus();
+        }
+        noteWindow.document.write("<h1>備忘：</h1>");
+        noteWindow.document.write("<h3>");
+        noteWindow.document.write(note);
+        noteWindow.document.write("</h3>");
+    }
+});
+</script>
+
+<!-- Deck Core and extensions -->
+<script src="../deck.js/core/deck.core.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
+<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/hash/deck.hash.js"></script>
+<script> $(function() {$.deck('.slide');}); </script>
+</body>
+</html>
