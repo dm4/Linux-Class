@@ -60,9 +60,9 @@
 </ul></li>
 </ul>
 <div></div>
-<p><code>
-0 12 * * * tar cjvf /tmp/home.<code>date "+\%Y\%m\%d"</code>.tar.bz2 /home/user
-</code></p>
+<div>
+0 12 * * * tar cjvf /tmp/home.`date "+\%Y\%m\%d"`.tar.bz2 /home/user
+</div>
 </div><div class="slide" id="index">
 <h1>程式化腳本 Shell Script</h1>
 </div><div class="slide" id="outline">
@@ -112,7 +112,7 @@ $ echo $test
 <ul>
 <li><h3>字串的連接</h3>
 <pre><code>$ test=1"23"'45'
-$ echo $test1
+$ echo $test
 </code></pre></li>
 </ul>
 </div><div class="slide" id="string-2">
@@ -464,7 +464,7 @@ done
 </div><div class="slide" id="hw2">
 <h2>Homework 2</h2>
 <ul>
-<li>使用者輸入一個目錄，把目錄下 <code>所有</code> 的 <code>.txt</code> 檔重新命名
+<li>使用者輸入一個目錄，把目錄下 <code>所有</code> 的 <code>.txt</code> 檔做特定處理
 <ul>
 <li><code>所有</code> 代表子目錄下的 <code>.txt</code> 也要考慮到</li>
 </ul></li>
