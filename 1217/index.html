@@ -80,6 +80,7 @@ done
 <pre><code>程式名稱: 來源 IP / 網域
 </code></pre></li>
 <li><p>先看 <code>/etc/hosts.allow</code> 再看 <code>/etc/hosts.deny</code></p></li>
+<li>若先被比對到，則不做接下來的比對</li>
 </ul>
 </div><div class="slide" id="tcpwrapper-3">
 <h2>TCP Wrapper</h2>
@@ -99,15 +100,13 @@ done
 <ul>
 <li><p>範例：不讓 <code>192.168.x.x</code> 的人可以 <code>ssh</code></p>
 <ul>
-<li><p>在 <code>/etc/hosts.allow</code></p>
-<pre><code>sshd: ALL
-</code></pre></li>
+<li><p>在 <code>/etc/hosts.allow</code> 裡不用寫東西</p></li>
 <li><p>在 <code>/etc/hosts.deny</code></p>
 <pre><code>sshd: 192.168.0.0/16
 </code></pre></li>
 </ul></li>
 </ul>
-</div><div class="slide" id="tcpwrapper-4">
+</div><div class="slide" id="tcpwrapper-5">
 <h2>TCP Wrapper</h2>
 <ul>
 <li><h3>練習</h3>
