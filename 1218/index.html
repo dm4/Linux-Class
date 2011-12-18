@@ -64,7 +64,7 @@
 </div><div class="slide" id="update2">
 <h2>安全更新資訊</h2>
 <ul>
-<li>Ubuntu security notices
+<li><h3>Ubuntu security notices</h3>
 <ul>
 <li><a href="http://www.ubuntu.com/usn/" title="USN">http://www.ubuntu.com/usn/</a></li>
 <li>漏洞<code>問題</code></li>
@@ -102,7 +102,7 @@
 </div><div class="slide" id="update5">
 <h2>怎麼更新? by unattended-upgrade</h2>
 <ul>
-<li>利用cron<code>自動</code>安裝安全性更新</li>
+<li><h3>利用cron<code>自動</code>安裝安全性更新</h3></li>
 </ul>
 <div></div>
 <pre><code># vim /etc/apt/apt.conf.d/10periodic
@@ -115,16 +115,18 @@ APT::Periodic::Unattended-Upgrade "1";
 <ul>
 <li>檢查<code>不尋常</code>記錄
 <ul>
+<li><code>來源</code></li>
 <li><code>時間</code></li>
 <li><code>服務</code></li>
 <li><code>相關資訊</code></li>
 </ul></li>
 <li><code>證據</code></li>
+<li><code>今天</code>會用到喔</li>
 </ul>
 </div><div class="slide" id="cehck_log2">
 <h2>檢查記錄檔</h2>
 <ul>
-<li>檢查 <code>/var/log/*</code>
+<li><h3>檢查 <code>/var/log/*</code></h3>
 <ul>
 <li><code>auth.log</code>, <code>wtmp</code>, etc...</li>
 <li>service: <code>apache2</code>, <code>proftpd</code> , etc...</li>
@@ -138,7 +140,7 @@ APT::Periodic::Unattended-Upgrade "1";
 </div><div class="slide" id="check_log3">
 <h2>Practice</h2>
 <ul>
-<li>例用<code>tail -F</code> 觀察<code>apache2</code> access log</li>
+<li><h3>例用<code>tail -F</code> 觀察<code>apache2</code> access log</h3></li>
 </ul>
 </div><div class="slide" id="check_log4">
 <h2>保存記錄檔</h2>
@@ -368,7 +370,8 @@ Not shown: 999 filtered ports
 PORT   STATE SERVICE
 22/tcp open  ssh
 </code></pre>
-<p>- <code>closed</code> -> <code>filtered</code></p>
+<p>- <code>closed</code> -> <code>filtered</code>
+- <code>nmap -r IP_address</code> 今天會用到喔</p>
 </div><div class="slide" id="firewall5">
 <h2>Practice</h2>
 <ul>
@@ -427,10 +430,14 @@ ServerTokens Prod
 <h1>Last Game</h1>
 </div><div class="slide" id="Game">
 <h2>Last Game</h2>
-<pre><code>上完系統訓練班的小明，將開發網站時遇到的問題都解決掉了，可是想不到駭客又來入侵他的主機了，小明這次將log檔分享出來希望大家能夠從中找到駭客所做的壞事，並嘗試利用登入其主機並在其中留下資訊向小明證明你找到了！要是成功的話，小明會很感激系統訓練班的你!
+<pre><code>上完系統訓練班的小明，將開發網站時遇到的問題都解決掉了，昨天剛學會的防火牆設定卻也沒有學好，想不到駭客馬上又來入侵他的主機了，小明這次將log檔分享出來希望大家能夠從中找到駭客所留下的蹤跡，並嘗試利用其登入並在主機中留下檔案向小明證明你找到了！要是成功的話，小明會很感激你喔!
 </code></pre>
 <ul>
-<li>小明的IP: <code>192.168.1.1</code></li>
+<li>小明的IP: <code>175.41.150.113</code></li>
+<li>請留下<code>PCxx</code>的檔名，小明就會相信了!
+<ul>
+<li>e.g., <code>PC01</code>, <code>PC02</code> or <code>PC15</code></li>
+</ul></li>
 </ul>
 </div><div class="slide" id="end">
 <h1>Q&amp;A</h1>
