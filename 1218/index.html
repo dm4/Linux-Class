@@ -362,6 +362,9 @@ touch -a Filename -r another_file
 <li>利用<code>nmap</code>掃<code>port</code></li>
 </ul>
 <div></div>
+<pre><code>nmap -r -PN IP_address
+</code></pre>
+<div></div>
 <pre><code>$ nmap -p- -PN IP_address
 Starting Nmap 5.51 ( http://nmap.org ) at 2011-12-18 01:50 CST
 Nmap scan report for 192.168.69.132
@@ -370,8 +373,11 @@ Not shown: 999 filtered ports
 PORT   STATE SERVICE
 22/tcp open  ssh
 </code></pre>
-<p>- <code>closed</code> -> <code>filtered</code>
-- <code>nmap -r IP_address</code> 今天會用到喔</p>
+<div></div>
+<ul>
+<li><code>closed</code> -> <code>filtered</code></li>
+<li><code>nmap -r IP_address</code> 今天會用到喔</li>
+</ul>
 </div><div class="slide" id="firewall5">
 <h2>Practice</h2>
 <ul>
