@@ -1,0 +1,480 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Security</title>
+<meta name="description" content="A jQuery library for modern HTML presentations">
+<meta name="author" content="Caleb Troughton">
+<meta name="viewport" content="width=1024, user-scalable=no">
+<!-- Core and extension CSS files -->
+<link rel="stylesheet" href="../deck.js/core/deck.core.css">
+<link rel="stylesheet" href="../deck.js/extensions/goto/deck.goto.css">
+<link rel="stylesheet" href="../deck.js/extensions/menu/deck.menu.css">
+<link rel="stylesheet" href="../deck.js/extensions/navigation/deck.navigation.css">
+<link rel="stylesheet" href="../deck.js/extensions/status/deck.status.css">
+<link rel="stylesheet" href="../deck.js/extensions/hash/deck.hash.css">
+<!-- Theme CSS files (menu swaps these out) -->
+<!-- <link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/web-2.0.css"> -->
+<link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/neon.css">
+<link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/horizontal-slide.css">
+<script src="../deck.js/modernizr.custom.js"></script>
+</head>
+<body class="deck-container">
+<div class="slide" id="index">
+<h1>Linux 系統訓練班</h1>
+</div><div class="slide" id="index-2">
+<h1>請繳回門禁卡唷:)</h1>
+</div><div class="slide" id="Outline">
+<h2>Outline - Security</h2>
+<ul>
+<li>軟體<code>定期</code>更新
+<ul>
+<li><code>重大</code>更新</li>
+</ul></li>
+<li>系統檢查
+<ul>
+<li>記錄檔</li>
+<li>權限設置</li>
+<li>檔案時間</li>
+</ul></li>
+<li><code>防火牆</code>設定</li>
+<li>服務版本資訊</li>
+</ul>
+</div><div class="slide" id="update1">
+<h1>軟體更新</h1>
+</div><div class="slide" id="update1">
+<h2>為何需要軟體更新</h2>
+<ul>
+<li><code>重大</code>更新
+<ul>
+<li><code>嚴重漏洞</code>修補
+<ul>
+<li>避免被輕易<code>入侵</code></li>
+</ul></li>
+<li><code>新版本</code>更加穩定
+<ul>
+<li>確保服務<code>穩定性</code></li>
+</ul></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="update2">
+<h2>安全更新資訊</h2>
+<ul>
+<li><h3>Ubuntu security notices</h3>
+<ul>
+<li><a href="http://www.ubuntu.com/usn/" title="USN">http://www.ubuntu.com/usn/</a></li>
+<li>漏洞<code>問題</code></li>
+<li>修補<code>時間</code></li>
+<li>修補<code>方法</code></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="update3">
+<h2>怎麼更新? by USN</h2>
+<pre><code># apt-get update
+# apt-get dist-upgrade
+</code></pre>
+<ul>
+<li><code>or</code></li>
+</ul>
+<div></div>
+<pre><code># apt-get update
+# apt-get upgrade
+</code></pre>
+</div><div class="slide" id="update4">
+<h2>怎麼更新? by unattended-upgrade</h2>
+<ul>
+<li>安裝安全性更新</li>
+</ul>
+<div></div>
+<pre><code># unattended-upgrade
+</code></pre>
+<div></div>
+<ul>
+<li>log file</li>
+</ul>
+<div></div>
+<pre><code>$ cat /var/log/unattended-upgrades/unattended-upgrades.log
+</code></pre>
+</div><div class="slide" id="update5">
+<h2>怎麼更新? by unattended-upgrade</h2>
+<ul>
+<li><h3>利用cron<code>自動</code>安裝安全性更新</h3></li>
+</ul>
+<div></div>
+<pre><code># vim /etc/apt/apt.conf.d/10periodic
+APT::Periodic::Unattended-Upgrade "1";
+</code></pre>
+</div><div class="slide" id="cehck_log">
+<h1>檢查記錄檔</h1>
+</div><div class="slide" id="cehck_log1">
+<h2>為何要檢查記錄檔?</h2>
+<ul>
+<li>檢查<code>不尋常</code>記錄
+<ul>
+<li><code>來源</code></li>
+<li><code>時間</code></li>
+<li><code>服務</code></li>
+<li><code>相關資訊</code></li>
+</ul></li>
+<li><code>證據</code></li>
+<li><code>今天</code>會用到喔</li>
+</ul>
+</div><div class="slide" id="cehck_log2">
+<h2>檢查記錄檔</h2>
+<ul>
+<li><h3>檢查 <code>/var/log/*</code></h3>
+<ul>
+<li><code>auth.log</code>, <code>wtmp</code>, etc...</li>
+<li>service: <code>apache2</code>, <code>proftpd</code> , etc...</li>
+</ul></li>
+</ul>
+<div></div>
+<pre><code>140.112.91.176 - - [17/Dec/2011:12:51:10 +0000] "GET /photos/.cgi HTTP/1.1" 200 257 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2"
+140.112.91.176 - - [17/Dec/2011:12:51:53 +0000] "GET /photos/notexist HTTP/1.1" 404 503 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2"
+</code></pre>
+<div></div>
+</div><div class="slide" id="check_log3">
+<h2>Practice</h2>
+<ul>
+<li><h3>例用<code>tail -F</code> 觀察<code>apache2</code> access log</h3></li>
+</ul>
+</div><div class="slide" id="check_log4">
+<h2>保存記錄檔</h2>
+<ul>
+<li><code>logrotate</code>
+<ul>
+<li><code>保存壓縮</code>記錄檔</li>
+</ul></li>
+</ul>
+<div></div>
+<pre><code>$ ls /var/log/auth.log*
+/var/log/auth.log  /var/log/auth.log.1  /var/log/auth.log.2.gz  /var/log/auth.log.3.gz  /var/log/auth.log.4.gz
+</code></pre>
+</div><div class="slide" id="Permission1">
+<h1>權限設定</h1>
+</div><div class="slide" id="Permission2">
+<h2>權限設定</h2>
+<ul>
+<li>資料夾<code>權限</code>
+<ul>
+<li>不想被外人讀取私密訊息</li>
+</ul></li>
+<li><code>隱藏資料夾</code>或<code>檔案</code>
+<ul>
+<li>被<code>植入</code>檔案</li>
+</ul></li>
+<li><code>setuid/gid</code>檔案</li>
+</ul>
+</div><div class="slide" id="Permission3">
+<h2>資料夾權限</h2>
+<ul>
+<li><code>預設</code>權限755 -> <code>rwxr-xr-x</code></li>
+<li>建議設定
+<ul>
+<li>家目錄 <code>rwx------</code></li>
+<li>確保只有<code>owner</code>可以對<code>資料夾存取</code></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="Permission4">
+<h2>隱藏資料夾或檔案</h2>
+<ul>
+<li>檢查<code>/tmp/*</code>, 或任何<code>可疑</code>的資料夾名稱
+<ul>
+<li>/tmp/.X1l-unix/</li>
+<li>/tmp/.Xll-unix/</li>
+<li>/tmp/.X11-unix/</li>
+<li>/home/student/.bashrc/</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="Permission5">
+<h2>檢查<code>setuid</code> or <code>setgid</code>檔案</h2>
+<ul>
+<li><code>Backdoor</code> 後門
+<ul>
+<li>簡易後門製作 <code>setuid root sh</code> </li>
+</ul></li>
+<li>Goal:
+<ul>
+<li><code>Grant privilege</code></li>
+<li><code>Grant access</code></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="Permission6">
+<h2>檢查<code>setuid</code> or <code>setgid</code>檔案</h2>
+<ul>
+<li>setuid file</li>
+</ul>
+<div></div>
+<pre><code>$ find / -type f -perm +4000 -exec ls -l {} \;
+</code></pre>
+<div></div>
+<ul>
+<li>setgid file</li>
+</ul>
+<div></div>
+<pre><code>$ find / -type f -perm +2000 -exec ls -l {} \;
+</code></pre>
+<div></div>
+<ul>
+<li>setuid and setgid file</li>
+</ul>
+<div></div>
+<pre><code>$ find / -type f -perm +6000 -exec ls -l {} \;
+</code></pre>
+<div></div>
+<ul>
+<li>要記得喔，<code>今天</code>會用到</li>
+</ul>
+</div><div class="slide" id="FileTime">
+<h1>檔案時間</h1>
+</div><div class="slide" id="FileTime1">
+<h2>檔案時間</h2>
+<ul>
+<li><code>Status change time</code>
+<ul>
+<li>檔案(inode)狀態改變時間
+<ul>
+<li>uid, gid, size, atime, ctime and mtime ...</li>
+</ul></li>
+</ul></li>
+<li><code>Modify time</code>
+<ul>
+<li>檔案最近一次被修改的時間</li>
+</ul></li>
+<li><code>Access time</code>
+<ul>
+<li>檔案最近一次被讀取的時間</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="FileTime2">
+<h2>為何要注意檔案時間</h2>
+<ul>
+<li><h3>攻擊者可利用假時間點<code>欺騙</code>使用者檢查此檔案</h3></li>
+<li>3個時間可以<code>不一致</code></li>
+<li><code>chmod</code>/<code>chown</code> 會改變<code>ctime</code> and <code>atime</code></li>
+<li><code>讀取檔案</code>會改變<code>ctime</code> and <code>atime</code></li>
+<li>可以自行假造<code>mtime</code> and <code>atime</code>
+<ul>
+<li>use <code>touch</code></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="FileTime3">
+<h2>如何檢查檔案時間</h2>
+<ul>
+<li>show <code>ctime</code></li>
+</ul>
+<div></div>
+<pre><code>$ ls -lc
+</code></pre>
+<div></div>
+<ul>
+<li>show <code>mtime</code></li>
+</ul>
+<div></div>
+<pre><code>$ ls -l
+</code></pre>
+<div></div>
+<ul>
+<li>show <code>atime</code></li>
+</ul>
+<div></div>
+<pre><code>$ ls -lu
+</code></pre>
+</div><div class="slide" id="FileTime4">
+<h2>如何自行修改檔案時間</h2>
+<ul>
+<li>modify <code>mtime</code></li>
+</ul>
+<div></div>
+<pre><code>touch -m Filename -t YYMMDDhhmm
+touch -m Filename -r another_file
+</code></pre>
+<div></div>
+<ul>
+<li>modify <code>atime</code></li>
+</ul>
+<div></div>
+<pre><code>touch -a Filename -t YYMMDDhhmm
+touch -a Filename -r another_file
+</code></pre>
+<div></div>
+<ul>
+<li>ctime並不能設定為<code>過去時間</code></li>
+</ul>
+</div><div class="slide" id="FileTime5">
+<h2>Practice</h2>
+<ul>
+<li>請建立<code>testfile</code></li>
+<li>並將<code>mtime</code>與<code>atime</code>設為<code>2005/12/30 00:00</code></li>
+<li>利用<code>ls</code>查看是否成功</li>
+</ul>
+</div><div class="slide" id="firewall">
+<h1>防火牆設定</h1>
+</div><div class="slide" id="firewall1">
+<h2>為何需要設定防火牆</h2>
+<ul>
+<li><code>減少</code>可被入侵的點</li>
+<li>限制出入<code>降低</code>系統負荷</li>
+<li><code>Port knocking</code> 隱藏可用服務</li>
+</ul>
+</div><div class="slide" id="firewall2">
+<h2>防火牆常見設定</h2>
+<ul>
+<li>Input policy <code>Drop</code></li>
+<li>Accept <code>specific</code> port
+<ul>
+<li>port <code>22</code> or port <code>80</code></li>
+</ul></li>
+</ul>
+<div></div>
+<pre><code># iptables -F
+# iptables -X 
+# iptables -P INPUT DROP           
+# iptables -A INPUT -i lo -j ACCEPT
+# iptables -A OUTPUT -o lo -j ACCEPT
+# iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+# iptables -A INPUT -i eth0 -p tcp -s 192.168.0.0/16 --dport 22 -j ACCEPT
+</code></pre>
+</div><div class="slide" id="firewall3">
+<h2>如何觀察是否有防火牆</h2>
+<ul>
+<li><code>nmap</code>: Network exploration tool and security / port scanner</li>
+</ul>
+<div></div>
+<pre><code># apt-get install nmap
+</code></pre>
+<div></div>
+<ul>
+<li>功能
+<ul>
+<li>Port scanner</li>
+<li>服務偵測</li>
+<li><h3>不合法</h3></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="firewall4">
+<h2>nmap使用</h2>
+<ul>
+<li>利用<code>nmap</code>掃<code>port</code></li>
+</ul>
+<div></div>
+<pre><code>nmap -r -PN IP_address
+</code></pre>
+<div></div>
+<pre><code>$ nmap -p- -PN IP_address
+Starting Nmap 5.51 ( http://nmap.org ) at 2011-12-18 01:50 CST
+Nmap scan report for 192.168.69.132
+Host is up (0.00057s latency).
+Not shown: 999 filtered ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+</code></pre>
+<div></div>
+<ul>
+<li><code>closed</code> -> <code>filtered</code></li>
+<li><code>nmap -r IP_address</code> 今天會用到喔</li>
+</ul>
+</div><div class="slide" id="firewall5">
+<h2>Practice</h2>
+<ul>
+<li>利用<code>nmap</code>檢查其他人的電腦</li>
+<li>觀看所<code>open</code>的<code>port</code>為何</li>
+<li>加入</li>
+</ul>
+<div></div>
+<pre><code># iptables -A INPUT -i eth0 -p tcp -s 192.168.0.0/16 --dport 80 -j ACCEPT
+</code></pre>
+<div></div>
+<ul>
+<li>nmap再觀察一次</li>
+</ul>
+</div><div class="slide" id="version">
+<h1>服務版本資訊</h1>
+</div><div class="slide" id="version1">
+<h2>為何要注意服務版本資訊</h2>
+<ul>
+<li><code>攻擊者</code>可觀察到<code>版本資訊</code></li>
+<li>由版本資訊可得知是否有<code>已公開</code>但<code>尚未修補</code>的漏洞
+<ul>
+<li><code>google</code>上可輕易搜尋<code>已公開漏洞攻擊手法</code></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="version2">
+<h2>如何觀察版本資訊</h2>
+<ul>
+<li>利用<code>nmap</code>觀察</li>
+</ul>
+<div></div>
+<pre><code>$ nmap -sV yourIP_address
+</code></pre>
+<div></div>
+<ul>
+<li>請同學自行練習看看</li>
+</ul>
+</div><div class="slide" id="version3">
+<h2>如何關閉版本資訊顯示</h2>
+<ul>
+<li><h3>Service configuration</h3>
+<ul>
+<li>e.g., apache2</li>
+</ul></li>
+</ul>
+<div></div>
+<pre><code># vim /etc/apache2/apache2.conf
+ServerTokens Prod
+# service apache2 restart
+</code></pre>
+<div></div>
+<ul>
+<li>利用<code>nmap</code>檢查</li>
+</ul>
+</div><div class="slide" id="Game">
+<h1>Last Game</h1>
+</div><div class="slide" id="Game">
+<h2>Last Game</h2>
+<pre><code>上完系統訓練班的小明，將開發網站時遇到的問題都解決掉了，昨天剛學會的防火牆設定卻也沒有學好，想不到駭客馬上又來入侵他的主機了，小明這次將log檔分享出來希望大家能夠從中找到駭客所留下的蹤跡，並嘗試利用其登入並在主機中留下檔案向小明證明你找到了！要是成功的話，小明會很感激你喔!
+</code></pre>
+<ul>
+<li>小明的IP: <code>175.41.150.113</code></li>
+<li>請留下<code>PCxx</code>的檔名，小明就會相信了!
+<ul>
+<li>e.g., <code>PC01</code>, <code>PC02</code> or <code>PC15</code></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="end">
+<h1>Q&amp;A</h1>
+</div>
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+<p class="deck-status">
+    Hung-Chi Su (atdog)&nbsp;&nbsp;&nbsp;&nbsp;
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="../deck.js/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="../deck.js/jquery-1.6.1.min.js">\x3C/script>')</script>
+
+<!-- Deck Core and extensions -->
+<script src="../deck.js/core/deck.core.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
+<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/hash/deck.hash.js"></script>
+<script> $(function() {$.deck('.slide');}); </script>
+</body>
+</html>
