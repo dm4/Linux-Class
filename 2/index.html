@@ -23,6 +23,9 @@
 <link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/neon.css">
 <link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/horizontal-slide.css">
 <script src="../deck.js/modernizr.custom.js"></script>
+<style>
+    .note { display: none; }
+</style>
 </head>
 <body class="deck-container">
 <div class="slide" id="index">
@@ -36,8 +39,8 @@
 </code></pre></li>
 <li><p>新增 testgroup ，並將 user, testuser1 加入 testgroup</p>
 <pre><code># addgroup testgroup
-# addgroup user testgroup
 # addgroup testuser1 testgroup
+# addgroup testuser2 testgroup
 </code></pre></li>
 </ul>
 </div><div class="slide" id="practice-1">
@@ -50,8 +53,9 @@ $ touch testfile
 <li><p>並設定 testfile</p>
 <ul>
 <li>使 testuser1 對 testfile 權限為 <code>r-x</code></li>
-<li><p>使 testuser2 對 testfile 權限為 <code>--x</code></p>
-<pre><code>$ chmod 751 testfile
+<li>使 testuser2 對 testfile 權限為 <code>--x</code></li>
+<li><p>使 others 對 testfile 無權限</p>
+<pre><code>$ chmod 510 testfile
 $ chgrp testgroup testfile
 </code></pre></li>
 </ul></li>
@@ -639,8 +643,9 @@ deb-src http://tw.archive.ubuntu.com/ubuntu/ oneiric main restricted
 <h2>bash 的指令歷史記錄</h2>
 <ul>
 <li><code>bash</code>, <code>csh</code>, <code>tcsh</code> 均支援指令記錄</li>
-<li><code>historoy</code> 可看指令歷史記錄</li>
+<li><code>history</code> 可看指令歷史記錄</li>
 <li><code>![編號]</code> 可重做指令</li>
+<li><code>!!</code> 可重做上一個指令</li>
 </ul>
 </div><div class="slide" id="io">
 <h2>標準輸入／輸出 (Standard I/O)</h2>
@@ -712,6 +717,26 @@ deb-src http://tw.archive.ubuntu.com/ubuntu/ oneiric main restricted
 
 <script src="../deck.js/jquery.js"></script>
 <script>window.jQuery || document.write('<script src="../deck.js/jquery-1.6.1.min.js">\x3C/script>')</script>
+<script>
+$(document).bind('deck.change', function(event, from, to) {
+    slide = $.deck('getSlide', to);
+    note = $(slide).find('.note').html();
+    if (typeof noteWindow != 'undefined') {
+        noteWindow.document.body.innerHTML = "";
+    }
+    if (note) {
+        if (typeof noteWindow == 'undefined') {
+            noteWindow = window.open('', 'note');
+            noteWindow.blur();
+            window.focus();
+        }
+        noteWindow.document.write("<h1>備忘：</h1>");
+        noteWindow.document.write("<h3>");
+        noteWindow.document.write(note);
+        noteWindow.document.write("</h3>");
+    }
+});
+</script>
 
 <!-- Deck Core and extensions -->
 <script src="../deck.js/core/deck.core.js"></script>
