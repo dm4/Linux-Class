@@ -140,6 +140,10 @@ $ ifconfig interface options
 <pre><code>$ ifup interface
 $ ifdown interface
 </code></pre>
+<div></div>
+<ul>
+<li>需先定義<code>/etc/network/interfaces</code></li>
+</ul>
 </div><div class="slide" id="tools_cont1-ifconfig">
 <h2>Network tools - ifconfig(cont.)</h2>
 <ul>
@@ -150,6 +154,8 @@ $ ifdown interface
 <li><h3>lo0</h3>
 <ul>
 <li>loopback interface</li>
+<li>cat /etc/network/interfaces</li>
+<li><code>127.0.0.1</code> -> <code>localhost</code></li>
 </ul></li>
 <li><h3>wlan0</h3>
 <ul>
@@ -192,8 +198,9 @@ $ route -n
 $ dhclient interface
 </code></pre>
 <div></div>
-<pre><code>* dhcp client
-</code></pre>
+<ul>
+<li>DHCP Client</li>
+</ul>
 </div><div class="slide" id="tools_cont5">
 <h2>Network tools - ping, traceroute, mtr</h2>
 <pre><code>$ ping
@@ -396,13 +403,18 @@ $ showmount -e localhost
 <pre><code>小明利用 NFS 架設了公用空間想給公司使用。
 但小明卻忘記將權限及防火牆設定好，
 結果導致資料外洩，而面臨開除的邊緣。
-他的IP為xxx.xxx.xxx.xxx，
+他的IP為 192.168.49.179
 請問小明是如何被入侵的呢？
 可以請大家幫忙找到洩漏的個人資料為何麻?
 (個人資料壓縮檔 檔名格式為"八位數字.tar" e.g.,02032005.tar, 檔案超過20000 bytes)
 </code></pre>
+<div></div>
+<ul>
+<li>請先連線至<code>CSIE</code></li>
+</ul>
 </div><div class="slide" id="end">
 <h1>Q&amp;A</h1>
+</div>
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a>
 <p class="deck-status">
