@@ -390,6 +390,12 @@ nameserver xxx.xxx.xxx.xxx
 # /etc/init.d/nfs-kernel-server restart
 $ showmount -e localhost
 </code></pre>
+<div></div>
+<pre><code># mount IP:/path mount_point
+$ df 
+# umount IP:/path
+# umount mount_point
+</code></pre>
 </div><div class="slide" id="Practice">
 <h2>Practice</h2>
 <ul>
@@ -403,7 +409,7 @@ $ showmount -e localhost
 <pre><code>小明利用 NFS 架設了公用空間想給公司使用。
 但小明卻忘記將權限及防火牆設定好，
 結果導致資料外洩，而面臨開除的邊緣。
-他的IP為 192.168.49.179
+他的IP為 10.5.1.224
 請問小明是如何被入侵的呢？
 可以請大家幫忙找到洩漏的個人資料為何麻?
 (個人資料壓縮檔 檔名格式為"八位數字.tar" e.g.,02032005.tar, 檔案超過20000 bytes)
