@@ -1,12 +1,12 @@
-echo -n "產生或移除 ~/tesfile (add/del) "
+echo -n "產生或移除 ~/testfile (add/del) "
 read answer
 
 if [ "$answer" = 'add' ]; then
-    echo 'touch ~/tesfile'
-    touch ~/tesfile
+    echo 'touch ~/testfile'
+    touch ~/testfile
 elif [ "$answer" = 'del' ]; then
-    echo 'rm ~/tesfile'
-    rm ~/tesfile
+    echo 'rm ~/testfile'
+    rm ~/testfile
 else
     echo '無效的指令'
 fi
