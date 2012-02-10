@@ -60,11 +60,9 @@
 <li><code>/usr/sbin/</code>
 <ul>
 <li>可執行檔</li>
-</ul></li>
-<li><code>/etc/apache2/</code>
-<ul>
 <li>設定檔</li>
 </ul></li>
+<li><code>/etc/apache2/</code></li>
 <li><code>/var/www/</code>
 <ul>
 <li>預設的網頁目錄</li>
@@ -164,7 +162,7 @@
 <pre><code>DocumentRoot /var/www/
 </code></pre>
 <p>改成</p>
-<pre><code>DocumentRoot /home/user/www/
+<pre><code>DocumentRoot /home/student/www/
 </code></pre></li>
 </ul></li>
 </ul>
@@ -180,7 +178,7 @@
 <ul>
 <li><code>Options</code>
 <ul>
-<li><code>All</code> 允許所有選項,這是預設指令</li>
+<li><code>All</code> 允許所有選項</li>
 <li><code>None</code> 關閉所有選項</li>
 <li><code>Indexes</code> 允許顯示目錄</li>
 <li><code>FollowSymLinks</code> 允許使用 symbolic link</li>
@@ -200,6 +198,7 @@ Allow from all
 Deny  from 140.112.0.0/16
 </code></pre></li>
 <li><p><code>Order</code> 檢查順序</p></li>
+<li>以順序越後面的規則為主</li>
 </ul>
 </div><div class="slide" id="setting-3">
 <h2>Apache 設定</h2>
@@ -208,6 +207,7 @@ Deny  from 140.112.0.0/16
 <ul>
 <li><code>All</code> 允許 <code>.htaccess</code> </li>
 <li><code>None</code> 不允許 <code>.htaccess</code> </li>
+<li><code>AuthConfig</code>, <code>FileInfo</code>, <code>Indexes</code>, <code>Limit</code></li>
 </ul></li>
 <li><code>ErrorLog</code>
 <ul>
@@ -266,6 +266,7 @@ AuthName      "登入前的提示訊息"
 AuthUserFile  .htpasswd檔的路徑
 Require       valid-user
 </code></pre></li>
+<li><p>沒辦法登出，只能做簡單的認證</p></li>
 </ul></li>
 </ul>
 </div><div class="slide" id="rewrite-1">
@@ -322,9 +323,8 @@ RewriteRule   ^/hello$  /hello.html  [R,L]
 </code></pre></li>
 <li><h3>設定</h3>
 <ul>
-<li><p>修改 <code>/etc/apache2/httpd.conf</code></p>
-<pre><code>UserDir public_html
-</code></pre></li>
+<li>設定檔在 <code>/etc/apache2/mods-enabled/userdir.conf</code></li>
+<li>預設目錄為 <code>public_html</code></li>
 </ul></li>
 </ul>
 </div><div class="slide" id="user-dir-3">
@@ -338,6 +338,7 @@ RewriteRule   ^/hello$  /hello.html  [R,L]
 <ul>
 <li><h3>設定</h3>
 <ul>
+<li>設定檔在 <code>/etc/apache2/mods-enabled/userdir.conf</code></li>
 <li><p>不讓特定帳號使用</p>
 <pre><code>UserDir enabled
 UserDir disabled root guest
@@ -366,6 +367,15 @@ UserDir enabled user
     ...
 &lt;/VirtualHost&gt;
 </code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="vhost-3">
+<h2>Virtual Host 設定</h2>
+<ul>
+<li><h3>設定</h3>
+<ul>
+<li>或把 VirtualHost 設定寫在 <code>/etc/apache2/sites-available/</code></li>
+<li><code>$ sudo a2ensite</code></li>
 </ul></li>
 </ul>
 </div><div class="slide" id="game">
