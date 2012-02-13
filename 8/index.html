@@ -424,11 +424,9 @@ $ fuser -uv /tmp/mnt
 <li><code>Download</code> first</li>
 </ul>
 <div></div>
-<pre><code>$ showmount -e 192.168.50.113
-# mount 192.168.50.113:/Users/atdog/Desktop/Train_linux/source /tmp/mnt
-$ cp /tmp/mnt/proftpd-1.3.4rc3.tar.gz ~/
+<pre><code>$ wget "ftp://ftp.ntu.edu.tw/proftpd/distrib/source/proftpd-1.3.4rc3.tar.gz"
 # umount /tmp/mnt
-$ tar -zxvf proftpd-1.3.4rc3.tar.gz
+$ tar -zxvf proftpd-1.3.4rc3.tar.gz -C /home/student
 </code></pre>
 </div><div class="slide" id="FTP-install1">
 <h2>Installation, cont.</h2>
@@ -437,10 +435,16 @@ $ tar -zxvf proftpd-1.3.4rc3.tar.gz
 </ul>
 <div></div>
 <pre><code>$ cd proftpd-1.3.4rc3
-$ ./configure
-$ make
+$ ./configure --prefix=/home/student/ftp
+</code></pre>
+<div></div>
+<ul>
+<li>default prefix = /usr/local</li>
+</ul>
+<div></div>
+<pre><code>$ make
 # make install
-$ /usr/local/sbin/proftpd
+$ /home/student/ftp/sbin/proftpd
 </code></pre>
 <div></div>
 <pre><code>$ ftp localhost
@@ -450,11 +454,11 @@ $ /usr/local/sbin/proftpd
 <ul>
 <li>Config file <code>proftpd.conf</code>
 <ul>
-<li>路徑 <code>/usr/local/etc/proftpd.conf</code></li>
+<li>路徑 <code>/home/student/ftp/etc/proftpd.conf</code></li>
 </ul></li>
 </ul>
 <div></div>
-<pre><code># vim /usr/local/etc/proftpd.conf
+<pre><code># vim /home/student/ftp/etc/proftpd.conf
 </code></pre>
 </div><div class="slide" id="FTP-configuration1">
 <h2>Configuration, cont.</h2>
@@ -522,7 +526,7 @@ $ /usr/local/sbin/proftpd
 <li><h3>設定ServerName</h3></li>
 </ul>
 <div></div>
-<pre><code># vim /usr/local/etc/proftpd.conf
+<pre><code># vim /home/student/ftp/etc/proftpd.conf
 </code></pre>
 <div></div>
 <ul>
@@ -538,7 +542,7 @@ $ kill -1 PID
 <li><h3>設定chroot</h3></li>
 </ul>
 <div></div>
-<pre><code># vim /usr/local/etc/proftpd.conf
+<pre><code># vim /home/student/ftp/etc/proftpd.conf
 </code></pre>
 <div></div>
 <ul>
@@ -554,7 +558,7 @@ $ kill -1 PID
 <li><h3>設定Overwrite</h3></li>
 </ul>
 <div></div>
-<pre><code># vim /usr/local/etc/proftpd.conf
+<pre><code># vim /home/student/ftp/etc/proftpd.conf
 </code></pre>
 <div></div>
 <ul>
