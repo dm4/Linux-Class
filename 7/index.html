@@ -30,41 +30,6 @@
 <body class="deck-container">
 <div class="slide" id="1210">
 <h1>Linux 作業系統班</h1>
-<p><!--
-!!hw1-1</p>
-<h2>Homework 1 解答</h2>
-<ul>
-<li><a href="hw1-1.txt">測試資料</a></li>
-<li>一個字元以上,包含前一個字串,一個字元以上</li>
-<li>輸出第三個字串的第一個字母</li>
-<li><p><code>hello</code> , wow<code>hello</code>world , <code>a</code>pple</p></li>
-<li><p>想法</p>
-<ul>
-<li>比對第一個部分 <code>.\{1,\}</code></li>
-<li>把第一個部份存起來 <code>\(.\{1,\}\)</code></li>
-<li>利用 <code>.*\1.*</code> 比對第二個部分</li>
-<li>取出第三部份的第一個字並存下來 <code>\(.\).*</code></li>
-</ul></li>
-<li><p><code>$ sed -n 's/^\(.\{1,\}\),.*\1.*,\(.\).*$/\2/p' hw.txt</code></p></li>
-</ul>
-</div><div class="slide" id="hw1-2">
-<h2>Homework 1 解答</h2>
-<ul>
-<li>備份家目錄</li>
-<li>備份檔案需用 <code>tar</code> 壓縮成 <code>bz</code> 檔案格式</li>
-<li>檔名為 <code>home.yyyymmdd.tar.bz2</code> 並存放於 <code>/tmp</code> 下</li>
-<li>想法
-<ul>
-<li><code>$ tar cjvf 檔名 /home/user</code></li>
-<li><code>$ date '+%Y%m%d'</code></li>
-<li>在 crontab 裡， <code>%</code> 需要跳脫</li>
-</ul></li>
-</ul>
-<div></div>
-<div>
-0 12 * * * tar cjvf /tmp/home.`date "+\%Y\%m\%d"`.tar.bz2 /home/user
-</div>
-<p>--!></p>
 </div><div class="slide" id="index">
 <h1>程式化腳本 Shell Script</h1>
 </div><div class="slide" id="outline">
