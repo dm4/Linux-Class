@@ -37,7 +37,7 @@
 <pre><code># adduser testuser1
 # adduser testuser2
 </code></pre></li>
-<li><p>新增 testgroup ，並將 user, testuser1 加入 testgroup</p>
+<li><p>新增 testgroup ，並將 testuser1, testuser2 加入 testgroup</p>
 <pre><code># addgroup testgroup
 # addgroup testuser1 testgroup
 # addgroup testuser2 testgroup
@@ -56,6 +56,7 @@ $ touch testfile
 <li>使 testuser2 對 testfile 權限為 <code>--x</code></li>
 <li><p>使 others 對 testfile 無權限</p>
 <pre><code>$ chmod 510 testfile
+$ chown testuser1 testfile
 $ chgrp testgroup testfile
 </code></pre></li>
 </ul></li>
