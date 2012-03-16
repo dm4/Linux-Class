@@ -87,6 +87,9 @@
 </div><div class="slide" id="install">
 <h2>Apache 安裝與設定</h2>
 <ul>
+<li><h3>移除</h3>
+<pre><code>$ sudo apt-get purge apache2
+</code></pre></li>
 <li><h3>安裝</h3>
 <pre><code>$ sudo apt-get install apache2
 </code></pre></li>
@@ -205,8 +208,8 @@ Deny  from 140.112.0.0/16
 <ul>
 <li><code>AllowOverride</code>
 <ul>
-<li><code>All</code> 允許 <code>.htaccess</code> </li>
-<li><code>None</code> 不允許 <code>.htaccess</code> </li>
+<li><code>All</code> 允許 <code>.htaccess</code></li>
+<li><code>None</code> 不允許 <code>.htaccess</code></li>
 <li><code>AuthConfig</code>, <code>FileInfo</code>, <code>Indexes</code>, <code>Limit</code></li>
 </ul></li>
 <li><code>ErrorLog</code>
@@ -362,7 +365,7 @@ UserDir enabled user
 <ul>
 <li>修改 <code>/etc/apache2/sites-enabled/000-default</code></li>
 <li><p>新增 VirtualHost 設定</p>
-<pre><code>&lt;VirtualHost *:80&gt;                                                                                                                                                                                                                            
+<pre><code>&lt;VirtualHost *:80&gt;
     ServerName xxx.xxx.xxx
     ...
 &lt;/VirtualHost&gt;
@@ -377,6 +380,28 @@ UserDir enabled user
 <li>或把 VirtualHost 設定寫在 <code>/etc/apache2/sites-available/</code></li>
 <li><code>$ sudo a2ensite</code></li>
 </ul></li>
+</ul>
+</div><div class="slide" id="cgi-1">
+<h2>CGI 設定</h2>
+<ul>
+<li>Common Gateway Interface</li>
+<li><p>從執行檔動態產生網頁</p>
+<pre><code>ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+</code></pre></li>
+</ul>
+</div><div class="slide" id="cgi-2">
+<h2>CGI 設定</h2>
+<ul>
+<li><p>新增檔案 <code>/usr/lib/cgi-bin/test.cgi</code></p>
+<pre><code>#!/bin/bash
+echo 'Content-type: text/html'
+echo
+echo 'I am cgi'
+</code></pre></li>
+<li><p>增加執行權限</p>
+<pre><code># chmod +x /usr/lib/cgi-bin/test.cgi
+</code></pre></li>
+<li><p>測試 <a href="http://localhost/cgi-bin/test.cgi">http://localhost/cgi-bin/test.cgi</a></p></li>
 </ul>
 </div><div class="slide" id="game">
 <h2>Little Game</h2>
