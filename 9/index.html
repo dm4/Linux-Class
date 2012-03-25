@@ -210,9 +210,9 @@ COMMIT
 </div><div class="slide" id="iptable-11">
 <h2>iptables</h2>
 <ul>
-<li><h3>新增 Rule ，開放 port 22 給 192.168.x.x 的人，並同時記錄下封包</h3>
-<pre><code># iptables -A INPUT -i eth0 -p tcp -s 192.168.0.0/16 --dport 22 -j LOG
-# iptables -A INPUT -i eth0 -p tcp -s 192.168.0.0/16 --dport 22 -j ACCEPT
+<li><h3>新增 Rule ，開放 port 22 給 10.5.x.x 的人，並同時記錄下封包</h3>
+<pre><code># iptables -A INPUT -i wlan0 -p tcp -s 10.5.0.0/16 --dport 22 -j LOG
+# iptables -A INPUT -i wlan0 -p tcp -s 10.5.0.0/16 --dport 22 -j ACCEPT
 </code></pre></li>
 <li><p>記得要先寫 <code>LOG</code> 的 Rule ，如果順序錯了就不會有記錄</p></li>
 <li>再次和旁邊的人合作，看看有沒有成功的把封包 log 下來</li>
