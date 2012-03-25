@@ -295,14 +295,15 @@ COMMIT
 </ul>
 </div><div class="slide" id="iptable-19">
 <h2>iptables</h2>
-<pre><code>iptables -F
+<pre><code>#!/bin/bash
+iptables -F
 iptables -X
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -P INPUT DROP
 iptables -P OUTPUT ACCEPT
 iptables -P FORWARD ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
-iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables-save -t filter
 </code></pre>
 </div><div class="slide" id="iptable-20">
