@@ -1,0 +1,695 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Linux 作業系統班</title>
+<meta name="description" content="A jQuery library for modern HTML presentations">
+<meta name="author" content="Caleb Troughton">
+<meta name="viewport" content="width=1024, user-scalable=no">
+<!-- Core and extension CSS files -->
+<link rel="stylesheet" href="../deck.js/core/deck.core.css">
+<link rel="stylesheet" href="../deck.js/extensions/goto/deck.goto.css">
+<link rel="stylesheet" href="../deck.js/extensions/menu/deck.menu.css">
+<link rel="stylesheet" href="../deck.js/extensions/navigation/deck.navigation.css">
+<link rel="stylesheet" href="../deck.js/extensions/status/deck.status.css">
+<link rel="stylesheet" href="../deck.js/extensions/hash/deck.hash.css">
+<!-- Theme CSS files (menu swaps these out) -->
+<!-- <link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/web-2.0.css"> -->
+<!--<link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/swiss.css"> -->
+<link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/neon.css">
+<link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/horizontal-slide.css">
+<script src="../deck.js/modernizr.custom.js"></script>
+<style>
+    .note { display: none; }
+</style>
+</head>
+<body class="deck-container">
+<div class="slide" id="1126">
+<h1>Linux 作業系統班</h1>
+</div><div class="slide" id="outline">
+<h2>Outline</h2>
+<ul>
+<li><h3>檔案系統 File System</h3></li>
+<li><h3>正規表示法 Regular Expression</h3></li>
+<li><h3>基礎 Vim 使用</h3></li>
+<li><h3>進階 Vim 使用</h3></li>
+</ul>
+</div><div class="slide" id="fs-index">
+<h1>檔案系統 File System</h1>
+</div><div class="slide" id="fs-outline">
+<h2>檔案系統 File System</h2>
+<ul>
+<li><h3>Linux 檔案系統與目錄管理</h3></li>
+<li><h3>掛載 <code>mount</code></h3></li>
+<li><h3>磁碟空間資訊</h3></li>
+<li><h3>檔案與目錄的權限屬性</h3></li>
+<li><h3>符號連結檔案 <code>link</code></h3></li>
+<li><h3>檔案搜尋與比較 <code>find</code>、<code>grep</code>、<code>diff</code></h3></li>
+</ul>
+</div><div class="slide" id="what-fs">
+<h2>什麼是檔案系統</h2>
+<ul>
+<li><p><code>檔案系統</code> 是指儲存在電腦中的檔案與目錄</p></li>
+<li><p>不同的作業系統，所支援的檔案系統不一定相同，有部份的</p></li>
+<li><p>作業系統會因為特殊的理由，而採購獨有的檔案系統</p></li>
+<li><p>這些不同格式的檔案系統，則稱為 <code>檔案系統類型</code></p></li>
+<li><p>以 Linux 作業系統的核心而言，目前已支援相當多種不同類型的檔案系統，
+這些不同的檔案系統類型，主要是用來決定資訊該如何儲存到儲存媒體上</p></li>
+</ul>
+</div><div class="slide" id="fs-intro">
+<h2>Linux 檔案系統與目錄管理</h2>
+<ul>
+<li><code>/</code> 根目錄</li>
+<li><code>/bin</code> 二進位檔 (binary) 的縮寫，存放各種系統的執行檔</li>
+<li><code>/boot</code> 作業系統啟動時所需要的檔案，包含系統 kernel (vmlinuz)、
+grub 開機程式等</li>
+<li><code>/dev</code> device 的縮寫，硬體裝置檔案，如硬碟、光碟、印表機</li>
+<li><code>/etc</code> 存放 Linux 系統與各服務的設定檔，如 apt, ssh, apache2, sudoers</li>
+<li><code>/home</code> 各使用者的家目錄</li>
+</ul>
+</div><div class="slide" id="fs-intro-2">
+<h2>Linux 檔案系統與目錄管理</h2>
+<ul>
+<li><code>/lib</code> 各種函式庫</li>
+<li><code>/list+found</code> 儲存檢測與修復檔案系統的資訊</li>
+<li><code>/mnt</code> 檔案系統的臨時掛載點</li>
+<li><code>/media</code> 卸除式媒體的掛載點</li>
+<li><code>/opt</code> 第三方軟體放置的目錄，不過有些第三方軟體也會放在 <code>/usr/local</code> 下</li>
+<li><code>/proc</code> 為 <code>虛擬檔案系統</code> ，其中的資料都是存放在記憶體中，本身不佔硬碟空間。
+裡面包含了系統 kernel 、process 等資訊</li>
+</ul>
+</div><div class="slide" id="fs-intro-3">
+<h2>Linux 檔案系統與目錄管理</h2>
+<ul>
+<li><code>/root</code> 為系統管理者 <code>root</code> 的家目錄</li>
+<li><code>/sbin</code> 存放只有 <code>root</code> 才能用來設定系統的執行檔</li>
+<li><code>/sys</code> 和 <code>/proc</code> 很像，也是一個 <code>虛擬檔案系統</code> ，用來存放 kernel 模組，
+及一些硬體資訊</li>
+<li><code>/tmp</code> 一般使用者皆可存取，也可供 process 放置暫存檔</li>
+<li><code>/usr</code> Unix Software Resource 的縮寫，存放各種軟體及其文件等資源</li>
+<li><code>/var</code> 主要存放各種經常會變動的檔案，如 cache, log, mail 等檔案</li>
+</ul>
+</div><div class="slide" id="mount">
+<h2>掛載 <code>mount</code></h2>
+<ul>
+<li>還記得 <code>/dev</code> 嗎？</li>
+<li>如何讓硬體裝置被 linux 所使用？
+<ul>
+<li><code>mount</code></li>
+</ul></li>
+<li><code>/dev/sda1</code> 為一硬碟裝置</li>
+<li>把硬碟掛載成 linux 上的目錄
+<ul>
+<li><code># mount /dev/sda1 /test</code></li>
+</ul></li>
+<li><code>/test</code> 稱為掛載點 (mount point)</li>
+</ul>
+</div><div class="slide" id="link">
+<h2><code>ln</code></h2>
+<ul>
+<li>Soft link
+<ul>
+<li>像是 Windows 下的捷徑</li>
+</ul></li>
+<li>Hard link
+<ul>
+<li>指向同一個硬碟 block</li>
+<li>不能 hard link 目錄</li>
+<li>不能跨 filesystem</li>
+</ul></li>
+<li><code>ln [-s] 原本檔案 連結檔案</code>
+<ul>
+<li><code>-s</code> 為 soft link</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="df">
+<h2><code>df</code></h2>
+<ul>
+<li>查看 disk 空間使用情形</li>
+<li>查看 disk mount 的情形</li>
+<li><code>-h</code> 顯示易讀的空間單位 (K, M, G)</li>
+<li><code>-T</code> 顯示檔案系統的格式</li>
+</ul>
+</div><div class="slide" id="df-2">
+<h2><code>df</code></h2>
+<pre><code>dm4@ubuntu:~$ df -Th
+檔案系統       類型     Size  Used Avail Use% 掛載點
+/dev/loop0    ext4    9.4G  3.6G  5.4G  40% /
+udev      devtmpfs    982M  4.0K  981M   1% /dev
+tmpfs        tmpfs    396M  892K  395M   1% /run
+none         tmpfs    5.0M     0  5.0M   0% /run/lock
+none         tmpfs    989M  192K  989M   1% /run/shm
+/dev/sda3  fuseblk     32G   27G  5.0G  85% /host
+/dev/sdb1     vfat    984M  789M  196M  81% /media/MY USB
+</code></pre>
+</div><div class="slide" id="du">
+<h2><code>du</code></h2>
+<ul>
+<li>查看目錄空間使用情形</li>
+<li><code>-h</code> 顯示易讀的空間單位 (K, M, G)</li>
+<li><p><code>-s</code> 只顯示總和，不顯示其下的子目錄</p>
+<pre><code>dm4@ubuntu:~$ du -sh /usr/bin
+151M    /usr/bin
+</code></pre></li>
+</ul>
+</div><div class="slide" id="stat">
+<h2><code>stat</code></h2>
+<ul>
+<li>查看檔案資訊</li>
+<li>Modify time (<code>mtime</code>) 最後一次更改內容的時間</li>
+<li>Access time (<code>atime</code>) 最後一次讀取的時間</li>
+<li>Change time (<code>ctime</code>) 最後一次更改內容或資訊的時間</li>
+</ul>
+</div><div class="slide" id="find">
+<h2><code>find</code></h2>
+<ul>
+<li><code>find</code> 用來做檔案的搜尋</li>
+<li>用法
+<ul>
+<li><code>$ find 路徑 參數</code></li>
+</ul></li>
+<li><code>-name</code> 用來指定檔名</li>
+<li><code>-type</code> 用來指定檔案類型</li>
+<li><code>-user</code>, <code>-group</code> 用來指定搜尋檔案的擁有者或所在群組</li>
+<li><code>-newer file</code> 找到 mtime 比 file 還新的檔案</li>
+<li><code>-exec 指令 {} \;</code>
+<ul>
+<li>找到檔案後執行特定指令</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="find-2">
+<h2><code>find</code></h2>
+<ul>
+<li><p>找到所有 <code>txt</code> 檔案，並複製到 <code>~/txt</code> 資料夾</p>
+<pre><code>$ find . -name "*.txt" -exec cp {} ~/txt \;
+</code></pre></li>
+<li><p><code>{}</code> 代表找到的檔案</p></li>
+<li><code>\;</code> 代表 <code>-exec</code> 的指令結束</li>
+</ul>
+</div><div class="slide" id="tar">
+<h2><code>tar</code></h2>
+<ul>
+<li><code>tar</code> 用來把檔案包成 <code>.tar</code> 檔，或是 <code>.gz</code>, <code>.bz2</code> 等壓縮檔</li>
+<li>用法
+<ul>
+<li><code>$ tar 選項 檔案</code></li>
+</ul></li>
+<li><code>c</code> 把檔案包成 <code>tar</code> 檔</li>
+<li><code>x</code> 解開 <code>tar</code> 檔</li>
+<li><code>f</code> 指定檔名</li>
+<li><code>v</code> 輸出過程</li>
+<li><code>z</code> 使用 <code>gzip</code> 壓縮，通常會把壓縮檔命名為 <code>.tar.gz</code></li>
+<li><code>j</code> 使用 <code>bzip</code> 壓縮，通常會把壓縮檔命名為 <code>.tar.bz2</code></li>
+</ul>
+</div><div class="slide" id="grep">
+<h2>grep</h2>
+<ul>
+<li><code>grep</code> 用來做檔案內容的搜尋</li>
+<li>用法
+<ul>
+<li><code>$ grep 參數 搜尋樣式 檔案</code></li>
+</ul></li>
+<li><code>-i</code> 忽略大小寫</li>
+<li><code>-n</code> 顯示行號</li>
+<li><code>--color=auto</code> 顯示顏色</li>
+</ul>
+</div><div class="slide" id="diff">
+<h2>diff</h2>
+<ul>
+<li><code>diff</code> 用來比較兩個檔案的異同，會顯示出不同的地方</li>
+<li>用法
+<ul>
+<li><code>$ diff 檔案一 檔案二</code></li>
+</ul></li>
+<li><code>vimdiff</code> 在 Vim 裡使用 diff</li>
+</ul>
+</div><div class="slide" id="practice-1">
+<h2>練習</h2>
+<ul>
+<li><h3>試著找出電腦中所有的 <code>.txt</code> 檔</h3>
+<ul>
+<li>怎麼濾掉錯誤訊息？</li>
+</ul></li>
+<li><h3>試著找出 <code>/var</code> 下哪些檔案含有 <code>root</code> 這個字串</h3></li>
+<li><h3>練習完的可以先下課休息一下</h3></li>
+</ul>
+</div><div class="slide" id="break-1">
+</div><div class="slide" id="regexp-index">
+<h1>正規表示法 Regular Expression</h1>
+</div><div class="slide" id="regexp-outline">
+<h2>Outline</h2>
+<ul>
+<li><h3>什麼是 Regular Expression</h3></li>
+<li><h3>Regular Expression 的特殊字元</h3></li>
+<li><h3>Regular Expression 中的重覆比對</h3></li>
+</ul>
+</div><div class="slide" id="what-regexp">
+<h2>什麼是 Regular Expression</h2>
+<ul>
+<li>Regular expression (<code>regexp</code>)</li>
+<li>特殊的語法用來做
+<ul>
+<li>字串比對</li>
+<li>字串取代</li>
+<li>取得特定的資訊</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="regexp-meta">
+<h2>Regular Expression 的特殊字元</h2>
+<ul>
+<li><h3>Basic regular expression (<code>BRE</code>)</h3>
+<pre><code>^   $   .   *   \(   \)   [   \{   \}   \
+</code></pre></li>
+<li><h3>Extended regular expression (<code>ERE</code>)</h3>
+<pre><code>|   ^   $   .   *   +   ?   (   )   [   {   }   \
+</code></pre></li>
+</ul>
+</div><div class="slide" id="regexp-meta-2">
+<h2>Regular Expression 的特殊字元</h2>
+<ul>
+<li><code>^</code> 行首</li>
+<li><code>$</code> 行尾</li>
+<li><code>.</code> 比對一個任意字元</li>
+</ul>
+</div><div class="slide" id="regexp-meta-3">
+<h2>Regular Expression 的特殊字元</h2>
+<ul>
+<li><h3><code>[]</code></h3>
+<ul>
+<li><p>比對 <code>[]</code> 裡的任一個字元</p>
+<pre><code>[aeiou]         # 比對母音
+[a-zA-Z0-9_]
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="regexp-meta-4">
+<h2>Regular Expression 的特殊字元</h2>
+<ul>
+<li><h3><code>[^]</code></h3>
+<ul>
+<li><p>比對 <code>[^]</code> <code>之外</code>的任一個字元</p>
+<pre><code>[^aeiou]        # 比對不是母音的字
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="regexp-meta-5">
+<h2>Regular Expression 的特殊字元</h2>
+<ul>
+<li><h3><code>\ (backslash)</code></h3>
+<ul>
+<li><p>跳脫字元，用來比對特殊符號</p>
+<pre><code>\\                  # 比對 \
+\[                  # 比對 [
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="regexp-meta-6">
+<h2>Regular Expression 的特殊字元</h2>
+<ul>
+<li><h3><code>|</code></h3>
+<ul>
+<li><p>在 <code>BRE</code> 裡沒有 <code>|</code></p>
+<pre><code>a.c|a.b         # 比對 'abc', 'acb', ...
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="regexp-meta-6">
+<h2>Regular Expression 的特殊字元</h2>
+<ul>
+<li><h3><code>()</code></h3>
+<ul>
+<li>用來標記子字串，可用 <code>\1</code> 等取回 <code>()</code> 內的子字串</li>
+<li><p>在 <code>BRE</code> 裡是用 <code>\(\)</code> 表示</p>
+<pre><code>(cat|dog)*
+</code></pre></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="regexp-meta-6">
+<h2>Regular Expression 的特殊字元</h2>
+<ul>
+<li><h3>Perl 風格的 Regular Expression</h3></li>
+<li><code>\d</code> 表示 <code>[0-9]</code></li>
+<li><code>\w</code> 表示 <code>[a-zA-Z0-9_]</code></li>
+<li><code>\s</code> 表示 <code>[\r\n\t ]</code></li>
+<li><code>\l</code> 表示 <code>[a-z]</code></li>
+<li><code>\u</code> 表示 <code>[A-Z]</code></li>
+</ul>
+</div><div class="slide" id="repeat">
+<h2>Regular Expression 重覆比對</h2>
+<ul>
+<li><h3><code>{m,n}</code></h3>
+<ul>
+<li>比對前一個東西重覆 m 次以上，不超過 n 次</li>
+<li>在 <code>BRE</code> 裡是用 <code>\{\}</code> 表示</li>
+</ul></li>
+<li><h3><code>*</code></h3>
+<ul>
+<li><code>{0,∞}</code></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="repeat-2">
+<h2>Regular Expression 重覆比對</h2>
+<ul>
+<li><h3><code>+</code></h3>
+<ul>
+<li><code>{1,∞}</code></li>
+<li>在 <code>BRE</code> 裡沒有</li>
+</ul></li>
+<li><h3><code>?</code></h3>
+<ul>
+<li><code>{0,1}</code></li>
+<li>在 <code>BRE</code> 裡沒有</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="regexp-grep">
+<h2>在 grep 中使用 Regular Expression</h2>
+<ul>
+<li>在 <code>grep</code> 搜尋樣式中可以使用 Regular Expression
+<ul>
+<li>預設是 <code>BRE</code></li>
+<li><code>-E</code> 使用 <code>ERE</code></li>
+<li><code>-P</code> 使用 perl 樣式的 Regular Expression</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="regexp-grep-2">
+<h2>在 grep 中使用 Regular Expression</h2>
+<pre><code>$ grep "[0-9]\{3\}" *.txt
+</code></pre>
+<div></div>
+<pre><code>$ grep -E "[0-9]{3}" *.txt
+</code></pre>
+<div></div>
+<pre><code>$ grep -P "\d{3}" *.txt
+</code></pre>
+</div><div class="slide" id="sed">
+<h2><code>sed</code></h2>
+<ul>
+<li><code>sed</code> 是一個常用的文字檔分析處理工具</li>
+<li>以行作為處理的單位 (<code>awk</code> 可以把每行細分為數個欄位)</li>
+<li><p>使用 <code>BRE</code></p>
+<pre><code>$ sed "規則" filename
+</code></pre></li>
+</ul>
+</div><div class="slide" id="sed-2">
+<h2><code>sed</code></h2>
+<ul>
+<li>下面所說的刪除並不會真的更改檔案內容，只是在處理過程中刪掉，不顯示在螢幕上</li>
+<li><p>刪除 1 ~ 4 行，剩下的顯示出來</p>
+<pre><code>$ sed "1,4d" file
+</code></pre></li>
+<li><p>刪除含有三個數字的行</p>
+<pre><code>$ sed "/[0-9]\{3\}/d" file
+</code></pre></li>
+</ul>
+</div><div class="slide" id="sed-3">
+<h2><code>sed</code></h2>
+<ul>
+<li><p>顯示含有三個數字的行，<code>-n</code> 取消預設印出所有行</p>
+<pre><code>$ sed -n "/[0-9]\{3\}/p" file
+</code></pre></li>
+<li><p>取代任意三個數字成 <code>xxx</code></p>
+<pre><code>$ sed "s/[0-9]\{3\}/xxx/" file
+</code></pre></li>
+</ul>
+</div><div class="slide" id="sed-4">
+<h2><code>sed</code></h2>
+<ul>
+<li><p>把任意三個數字用 <code>[]</code> 括起來，利用 <code>\1</code> 來取得 <code>\(\)</code> 裡的字串</p>
+<pre><code>$ sed "s/\([0-9]\{3\}\)/[\1]/" file
+</code></pre></li>
+<li><p>利用 <code>g</code> 來配對所有出現的樣式</p>
+<pre><code>$ sed "s/\([0-9]\{3\}\)/[\1]/g" file
+</code></pre></li>
+</ul>
+</div><div class="slide" id="practice-2">
+<h2>練習</h2>
+<ul>
+<li><h3>找出 <code>student</code> 和 <code>root</code> 所使用的 shell</h3>
+<ul>
+<li>hint: <code>.*</code> 會盡可能的去配對最長的字串</li>
+<li>hint: <code>\(.*\)</code> 和 <code>\1</code></li>
+<li>hint: <code>\(student\|root\)</code></li>
+</ul></li>
+</ul>
+<p><!--
+- ### 找出 admin group 裡的使用者，一行一個使用者
+--!></p>
+<ul>
+<li><h3>練習完的可以先下課休息一下</h3></li>
+</ul>
+</div><div class="slide" id="break-2">
+</div><div class="slide" id="vim-index">
+<h1>基礎 Vim 使用</h1>
+</div><div class="slide" id="vim-outline">
+<h2>Vim</h2>
+<ul>
+<li><h3>什麼是 Vim</h3></li>
+<li><h3>Mode</h3></li>
+<li><h3>基本指令</h3></li>
+</ul>
+</div><div class="slide" id="what-vim">
+<h1>Vi IMproved, a programmers text editor</h1>
+</div><div class="slide" id="mode-1">
+<h2>Mode</h2>
+<ul>
+<li><h3>Normal Mode</h3></li>
+<li><h3>Insert Mode</h3></li>
+<li><h3>Visual Mode</h3></li>
+<li><h3>Command Mode</h3></li>
+</ul>
+</div><div class="slide" id="mode-2">
+<h2>Mode</h2>
+<ul>
+<li><h3>Normal Mode</h3>
+<ul>
+<li>移動</li>
+<li>複製/貼上</li>
+<li>刪除</li>
+</ul></li>
+<li><h3>Insert Mode</h3>
+<ul>
+<li>編輯文字</li>
+<li>從 Normal Mode 按 <code>i</code> 進入 Insert Mode</li>
+<li><code>&lt;ESC&gt;</code> 或 <code>&lt;Ctrl-C&gt;</code> 回到 Normal Mode</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="mode-3">
+<h2>Mode</h2>
+<ul>
+<li><h3>Visual Mode</h3>
+<ul>
+<li>選取文字</li>
+<li>按 <code>v</code> 進入 Visual Mode</li>
+<li>按 <code>Ctrl-v</code> 進入 Block Visual Mode</li>
+<li>按 <code>&lt;ESC&gt;</code> 或 <code>&lt;Ctrl-C&gt;</code> 回到 Normal Mode</li>
+</ul></li>
+<li><h3>Command Mode</h3>
+<ul>
+<li>執行 vim 指令</li>
+<li><code>:指令</code></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="open">
+<h2>開啟/編輯檔案</h2>
+<ul>
+<li><p>在 shell 裡</p>
+<pre><code>$ vim filename
+</code></pre></li>
+<li><p>在 vim 裡</p>
+<pre><code>:e filename
+</code></pre></li>
+</ul>
+</div><div class="slide" id="save">
+<h2>儲存檔案</h2>
+<ul>
+<li><p>儲存</p>
+<pre><code>:w
+</code></pre></li>
+<li><p>另存新檔</p>
+<pre><code>:w filename
+</code></pre></li>
+</ul>
+</div><div class="slide" id="exit">
+<h2>離開 Vim</h2>
+<ul>
+<li><p>離開</p>
+<pre><code>:q
+</code></pre></li>
+<li><p>不儲存離開</p>
+<pre><code>:q!
+</code></pre></li>
+</ul>
+</div><div class="slide" id="exit-2">
+<h2>離開 Vim</h2>
+<ul>
+<li><p>儲存並離開</p>
+<pre><code>:wq
+:x
+</code></pre></li>
+</ul>
+</div><div class="slide" id="copy">
+<h2>複製</h2>
+<ul>
+<li>下面指令是在 Normal Mode 使用</li>
+<li>複製
+<ul>
+<li><code>yy</code> 複製目前這行</li>
+<li><code>3yy</code> 複製目前這行往下數共三行</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="delete">
+<h2>刪除</h2>
+<ul>
+<li>刪除
+<ul>
+<li><code>dd</code> 刪除目前這行</li>
+<li><code>3dd</code> 刪除目前這行往下數共三行</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="paste">
+<h2>貼上</h2>
+<ul>
+<li>貼上
+<ul>
+<li><code>p</code> 貼在目前這一行之下</li>
+<li><code>P</code> 貼在目前這一行之上</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="undo-redo">
+<h2>Undo &amp; Redo</h2>
+<ul>
+<li><p>Undo</p>
+<ul>
+<li><code>u</code> 復原</li>
+</ul></li>
+<li><p>Redo</p>
+<ul>
+<li><code>&lt;Ctrl-r&gt;</code> 取消復原</li>
+</ul></li>
+</ul>
+</div><div class="slide" id="search">
+<h2>搜尋</h2>
+<ul>
+<li>在 Normal Mode 執行</li>
+<li><code>/搜尋樣式</code></li>
+<li><code>n</code> 下一個搜尋結果</li>
+<li><code>N</code> 前一個搜尋結果</li>
+</ul>
+</div><div class="slide" id="replace">
+<h2>取代</h2>
+<ul>
+<li><p>在指定「範圍」裡的每一行，把第一個遇到的 <code>foo</code> 取代成 <code>bar</code></p>
+<pre><code>:範圍s/foo/bar/參數
+</code></pre></li>
+<li>範圍
+<ul>
+<li><code>%</code> 整個檔案</li>
+<li>預設只會取代游標所在的行</li>
+</ul></li>
+<li>參數
+<ul>
+<li><code>g</code> 取代行內所有字串</li>
+<li><code>c</code> 每次取代前會需要先確認</li>
+<li><code>:help :s_flags</code></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="record">
+<h2>錄製</h2>
+<ul>
+<li>把動作記下來重覆執行</li>
+<li><code>q[暫存器名稱]</code> 開始錄製</li>
+<li><code>q</code> 停止錄製</li>
+<li><code>@[暫存器名稱]</code> 執行錄製內容</li>
+</ul>
+</div><div class="slide" id="vim-regexp">
+<h2>Vim 裡的 Regular Expression</h2>
+<ul>
+<li><code>\(\)</code></li>
+<li><code>\{\}</code> or <code>\{}</code></li>
+<li><code>\|</code></li>
+<li><code>\+</code>, <code>\?</code></li>
+<li><code>*</code></li>
+</ul>
+</div><div class="slide" id="vim-regexp-2">
+<h2>Vim 裡的 Regular Expression</h2>
+<ul>
+<li><code>\1</code></li>
+<li><code>\d</code>
+<ul>
+<li><code>[0-9]</code></li>
+</ul></li>
+<li><code>\w</code>
+<ul>
+<li><code>[a-zA-Z0-9_]</code></li>
+</ul></li>
+</ul>
+</div><div class="slide" id="practice-3">
+<h2>練習</h2>
+<ul>
+<li>把檔案裡的身份證字號更改格式
+<ul>
+<li><code>A123456789</code> to <code>ID: A6789</code></li>
+<li><code>g234567890</code> to <code>ID: G7890</code></li>
+</ul></li>
+<li>把檔案裡的電話更改格式
+<ul>
+<li><code>22345678</code> to <code>Tel: 2234-5678</code></li>
+<li><code>2345-6789</code> to <code>Tel: 2345-6789</code></li>
+</ul></li>
+<li>找到檔案裡重覆的兩個字母，如： <code>aa</code>, <code>bb</code>, ... <code>zz</code></li>
+</ul>
+</div>
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+<p class="deck-status">
+    台大資訊系統訓練班 Linux 作業系統班&nbsp;&nbsp;&nbsp;&nbsp;
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="../deck.js/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="../deck.js/jquery-1.6.1.min.js">\x3C/script>')</script>
+<script>
+$(document).bind('deck.change', function(event, from, to) {
+    slide = $.deck('getSlide', to);
+    note = $(slide).find('.note').html();
+    if (typeof noteWindow != 'undefined') {
+        noteWindow.document.body.innerHTML = "";
+    }
+    if (note) {
+        if (typeof noteWindow == 'undefined') {
+            noteWindow = window.open('', 'note');
+            noteWindow.blur();
+            window.focus();
+        }
+        noteWindow.document.write("<h1>備忘：</h1>");
+        noteWindow.document.write("<h3>");
+        noteWindow.document.write(note);
+        noteWindow.document.write("</h3>");
+    }
+});
+</script>
+
+<!-- Deck Core and extensions -->
+<script src="../deck.js/core/deck.core.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
+<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/hash/deck.hash.js"></script>
+<script> $(function() {$.deck('.slide');}); </script>
+</body>
+</html>
